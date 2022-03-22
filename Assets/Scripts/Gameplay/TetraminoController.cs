@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class TetraminoController : MonoBehaviour
 {
-    private Grid grid;
     private Tetramino tetramino;
+    private bool isBoost;
+    private float speed = 1.5f;
 
     private void Start()
     {
-        grid = FindObjectOfType<Grid>();
+        isBoost = false;
         tetramino = GetComponent<Tetramino>();  
         StartCoroutine(MoveDown());
     }
@@ -29,13 +30,40 @@ public class TetraminoController : MonoBehaviour
         {
             tetramino.Rotate();
         }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            isBoost = true;
+            StopAllCoroutines();
+            StartCoroutine(MoveDown());
+        }
+
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            isBoost = false;
+            StopAllCoroutines();
+            StartCoroutine(MoveDown());
+        }
+
+        if (tetramino.IsPlaced)
+        {
+            StopAllCoroutines();
+            enabled = false;
+        }
     }
 
     private IEnumerator MoveDown()
     {
         while (true)
         {
-            yield return new WaitForSeconds(1.5f);
+            if (isBoost)
+            {
+                yield return new WaitForSeconds(speed / 12);
+            }
+            else
+            {
+                yield return new WaitForSeconds(speed);
+            }
             tetramino.MoveDown();
         }
     }

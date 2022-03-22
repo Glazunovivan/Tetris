@@ -1,16 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Cell : MonoBehaviour
+public abstract class Cell : MonoBehaviour
 {
-    [SerializeField] private Vector2Int positionModel;
+    [SerializeField] protected Vector2Int positionInGrid;
 
-    public Vector2Int PositionModel
+    public Vector2Int PositionInGrid
     {
         get
         {
-            return positionModel;
+            return positionInGrid;
         }
     }
 }
