@@ -42,10 +42,12 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -90,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8941656511025276571}
-  - component: {fileID: 8941656511025276570}
+  - component: {fileID: 392698651949325595}
   m_Layer: 0
   m_Name: Cell (0)
   m_TagString: Untagged
@@ -113,7 +115,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8941656511025276570
+--- !u!114 &392698651949325595
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,7 +124,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8941656511025276568}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72340e5576d73a64f8cf4ce1c8d1b185, type: 3}
+  m_Script: {fileID: 11500000, guid: c30ed9e9da2385a4e8ac1051c74fcaf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelCell: {x: 0, y: 0}
+  positionInGrid: {x: 0, y: 0}
+  fillSprite: {fileID: 0}
+  baseSprite: {fileID: 0}
+  spriteRenderer: {fileID: 8941656509932073786}

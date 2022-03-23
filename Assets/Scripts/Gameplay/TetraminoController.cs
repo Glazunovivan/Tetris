@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Tetramino))]
 public class TetraminoController : MonoBehaviour
 {
     private Tetramino tetramino;

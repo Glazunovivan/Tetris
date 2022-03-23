@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class Cell : MonoBehaviour
+public class Cell : MonoBehaviour
 {
     [SerializeField] protected Vector2Int positionInGrid;
 

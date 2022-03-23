@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System;
 
 public class Tetramino : MonoBehaviour
 {
@@ -10,30 +11,40 @@ public class Tetramino : MonoBehaviour
     }
 
     private Grid grid;
-    private Tetramino tetramino;
+    private Game game;
 
     [SerializeField] private TetraminoType type;
     [SerializeField] private List<TetraminoCellModel> parts;
 
     public bool IsPlaced { get; private set; }
 
-    public List<TetraminoCellModel> Parts { get { return parts; } }
+    public List<TetraminoCellModel> Parts 
+    { 
+        get 
+        { 
+            return parts; 
+        } 
+    }
 
-    public void Initialize(GridCell cell, Grid grid, TetraminoSpawn spawner)
+    public void Initialize(GridCell cell, Grid grid, Game game)
     {
-        tetramino = GetComponent<Tetramino>();
         IsPlaced = false;
         this.grid = grid;
+        this.game = game;
+        game.OnGameStarted += DeleteTetramino;
 
         for (int i=0; i < Parts.Count; i++)
         {
-            Parts[i].Initialize(cell, grid, this);
+            Parts[i].Create(cell, grid, this);
         }
+
         if (IsValidPosition()==false)
         {
-            //конец игры
-            Debug.Log("Конец игры");
+            DeleteTetramino();
+            game.GameOver();
+            return;
         }
+
         DrawInGrid();
     }
 
@@ -199,12 +210,18 @@ public class Tetramino : MonoBehaviour
 
     private void Place()
     {
-        if (IsPlaced == false)
-        {
-            FindObjectOfType<TetraminoSpawn>().Spawn();
-        }
         IsPlaced = true;
         grid.PlaceInGrid(this);
         grid.CheckLines();
+    }
+
+    private void DeleteTetramino()
+    {
+        Destroy(this.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        game.OnGameStarted -= DeleteTetramino;
     }
 }

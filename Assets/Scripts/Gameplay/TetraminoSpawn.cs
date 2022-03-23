@@ -2,26 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class TetraminoSpawn : MonoBehaviour
 {
     [SerializeField] private Tetramino[] tetraminoes;
-    
-    private GridCell cell;
+
+    private Game game;
     private Grid grid;
+    private GridCell cellStart;
 
-    private void Awake()
+    public void Initialize(Game game, Grid grid)
     {
-        grid = FindObjectOfType<Grid>();
-        cell = grid.GetCell(new Vector2Int(5,18));
-        Spawn();
-    }
+        this.game = game;
+        this.grid = grid;
 
+        cellStart = grid.GetCell(new Vector2Int(5, 18));
+
+        game.OnSpawnedTetramino += Spawn;        
+    }
 
     public void Spawn()
     {
         int randTetramino = Random.RandomRange(0, tetraminoes.Length);
         Tetramino tetramino = Instantiate(tetraminoes[randTetramino]);
-        tetramino.Initialize(cell, grid, this);
+        tetramino.Initialize(cellStart, grid, game);
+    }
+
+    private void OnDestroy()
+    {
+        game.OnSpawnedTetramino -= Spawn;
     }
 }

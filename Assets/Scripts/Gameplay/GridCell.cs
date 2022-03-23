@@ -2,7 +2,15 @@
 
 public class GridCell : Cell
 {
-    public bool IsFill 
+    [SerializeField] private Sprite fillSprite;
+    [SerializeField] private Sprite baseSprite;
+    [SerializeField] private SpriteRenderer spriteRenderer; 
+
+    private bool isFill;
+    
+    public TetraminoCellModel PartOfTetromino { get; set; }
+
+    public bool IsFill
     {
         get
         {
@@ -16,18 +24,20 @@ public class GridCell : Cell
         }
     }
 
-    private bool isFill;
-    public TetraminoCellModel PartOfTetromino { get; set; }
+    private void Start()
+    {
+        
+    }
 
     private void SetColor()
     {
         if (isFill)
         {
-            GetComponentInChildren<SpriteRenderer>().color = new Color(0.1f, 0.1f, 0.1f, 1);
+            spriteRenderer.color = new Color(0.1f, 0.1f, 0.1f, 1);
         }
         else
         {
-            GetComponentInChildren<SpriteRenderer>().color = new Color(0.1f, 0.1f, 0.1f, 0.2f);
+            spriteRenderer.color = new Color(0.1f, 0.1f, 0.1f, 0.2f);
         }
     }
 }

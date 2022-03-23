@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Модель объекта Тетромино. Работает сама по себе корректно, вне зависимости от системы координат Unity
+/// Модель объекта Тетромино. Работает сама по себе корректно, вне зависимости от системы координат на сцене
 /// </summary>
 public class TetraminoCellModel : Cell
 {
-    public bool IsPlace { get; private set; }
-
     [SerializeField] private Vector2Int PositionRelativeCenter;
-    
+
     private Tetramino parentTetramino;
     private Grid grid;
 
-    public void Initialize(GridCell cell, Grid grid, Tetramino parentTetramino)
+    public void Create(GridCell cell, Grid grid, Tetramino parentTetramino)
     {
         positionInGrid = cell.PositionInGrid + PositionRelativeCenter;
         this.grid = grid;
         this.parentTetramino = parentTetramino;
-        IsPlace = false;
     }
 
     public void MoveLeft()

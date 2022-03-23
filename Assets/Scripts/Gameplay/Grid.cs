@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 
-public class Grid : MonoBehaviour
+public sealed class Grid : MonoBehaviour
 {
     [SerializeField] private GridCell[,] cells;
+    private Game game;
+
 
     public readonly int Width = 10;
     public readonly int Height = 20;
@@ -14,15 +16,18 @@ public class Grid : MonoBehaviour
         }
     }
 
-    private void Awake()
+    public void Initialize(Game game)
     {
+        this.game = game;
+        this.game.OnGameStarted += ResetCells;
         cells = new GridCell[Height, Width];
 
         for (int y = 0; y < Height; y++)
         {
             for (int x = 0; x < Width; x++)
             {
-                cells[y,x] = transform.GetChild(y).GetChild(x).GetComponent<GridCell>();
+                cells[y, x] = transform.GetChild(y).GetChild(x).GetComponent<GridCell>();
+                
             }
         }
     }
@@ -38,6 +43,11 @@ public class Grid : MonoBehaviour
         {
             AddInGrid(tetramino.Parts[i]);
         }
+
+        if (!game.IsEnded)
+        {
+            game.NewTetramino();
+        }
     }
 
     public void CheckLines()
@@ -48,6 +58,19 @@ public class Grid : MonoBehaviour
             {
                 ClearLine(y);
                 Down(y);
+
+                game.UpdateScore();
+            }
+        }
+    }
+
+    private void ResetCells()
+    {
+        for (int y = 0; y < Height; y++)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                cells[y, x].IsFill = false;
             }
         }
     }
