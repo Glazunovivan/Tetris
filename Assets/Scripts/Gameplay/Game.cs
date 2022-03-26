@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -11,8 +9,8 @@ public class Game : MonoBehaviour
 
     public event Action OnGameStarted;
     public event Action OnSpawnedTetramino;
-    public event Action<string> OnScoreChanged;
     public event Action OnGameOver;
+    public event Action<string> OnScoreChanged;
 
     private GameInitializer gameInitializer;
 
@@ -45,7 +43,6 @@ public class Game : MonoBehaviour
     {
         IsEnded = true;
         Score.SaveScore();
-
         StopAllCoroutines();
         
         OnGameOver?.Invoke();

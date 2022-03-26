@@ -1,227 +1,221 @@
 ﻿using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
-using System;
 
-public class Tetramino : MonoBehaviour
-{
-    public enum TetraminoType
+    public class Tetramino : MonoBehaviour
     {
-        I, J, L, O, S, T, Z
-    }
-
-    private Grid grid;
-    private Game game;
-
-    [SerializeField] private TetraminoType type;
-    [SerializeField] private List<TetraminoCellModel> parts;
-
-    public bool IsPlaced { get; private set; }
-
-    public List<TetraminoCellModel> Parts 
-    { 
-        get 
-        { 
-            return parts; 
-        } 
-    }
-
-    public void Initialize(GridCell cell, Grid grid, Game game)
-    {
-        IsPlaced = false;
-        this.grid = grid;
-        this.game = game;
-        game.OnGameStarted += DeleteTetramino;
-
-        for (int i=0; i < Parts.Count; i++)
+        public enum TetraminoType
         {
-            Parts[i].Create(cell, grid, this);
+            I, J, L, O, S, T, Z
         }
 
-        if (IsValidPosition()==false)
+        public bool IsPlaced { get; private set; }
+        public List<TetraminoCellModel> Parts
         {
-            DeleteTetramino();
-            game.GameOver();
-            return;
-        }
-
-        DrawInGrid();
-    }
-
-    public void MoveLeft()
-    {
-        for (int i = 0; i < Parts.Count; i++)
-        {
-            Parts[i].MoveLeft();
-        }
-        if (IsValidPosition() == false)
-        {
-            for (int i = 0; i < Parts.Count; i++)
+            get
             {
-                Parts[i].MoveRight();
+                return parts;
             }
         }
-        DrawInGrid();
-    }
 
-    public void MoveRight()
-    {
-        for (int i = 0; i < Parts.Count; i++)
+
+        [SerializeField] private TetraminoType type;
+        [SerializeField] private List<TetraminoCellModel> parts;
+        private Grid grid;
+        private Game game;
+
+        public void Initialize(GridCell cell, Grid grid, Game game)
         {
-            Parts[i].MoveRight();
+            IsPlaced = false;
+            this.grid = grid;
+            this.game = game;
+
+            //удаляем все тетрамино при рестарте
+            game.OnGameStarted += DeleteTetramino;
+
+            for (int i = 0; i < Parts.Count; i++)
+            {
+                Parts[i].Create(cell, grid, this);
+            }
+
+
+            if (IsValidPosition() == false)
+            {
+                game.GameOver();
+                DeleteTetramino();
+            }
+
+            DrawInGrid();
         }
-        if (IsValidPosition() == false)
+
+        public void MoveLeft()
         {
             for (int i = 0; i < Parts.Count; i++)
             {
                 Parts[i].MoveLeft();
             }
+            if (IsValidPosition() == false)
+            {
+                for (int i = 0; i < Parts.Count; i++)
+                {
+                    Parts[i].MoveRight();
+                }
+            }
+            DrawInGrid();
         }
-        DrawInGrid();
-    }
 
-    public void MoveDown()
-    {
-        for (int i = 0; i < Parts.Count; i++)
-        {
-            Parts[i].MoveDown();
-        }
-        if (IsValidPosition() == false)
+        public void MoveRight()
         {
             for (int i = 0; i < Parts.Count; i++)
             {
-                Parts[i].MoveUp();
+                Parts[i].MoveRight();
             }
-            Place();
-        }
-        DrawInGrid();
-    }
-
-    public void MoveDownAfterClear(TetraminoCellModel part)
-    {
-        part.MoveDown();
-        DrawInGrid();
-    }
-
-    public void Rotate()
-    {
-        if (type == TetraminoType.O)
-        {
-            return;
-        }
-
-        for (int i = 0; i < Parts.Count; i++)
-        {
-            Parts[i].Rotate();
-        }
-
-        if (IsValidPosition() == false)
-        {
-            //на левой половинке находимся
-            //меняем положения, пока позиция не станет валидной
-            if (Parts[0].PositionInGrid.x < grid.Width / 2)
+            if (IsValidPosition() == false)
             {
-                do
+                for (int i = 0; i < Parts.Count; i++)
                 {
-                    for (int i = 0; i < Parts.Count; i++)
-                    {
-                        Parts[i].RotateInverse();
-                    }
-
-                    for (int i = 0; i < Parts.Count; i++)
-                    {
-                        Parts[i].MoveRight();
-                    }
-
-                    Rotate();
-
-                } while (IsValidPosition()!=true);
-            }
-            //на правой половинке находимся
-            else if (Parts[0].PositionInGrid.x > grid.Width / 2)
-            {
-                do
-                {
-                    for (int i = 0; i < Parts.Count; i++)
-                    {
-                        Parts[i].RotateInverse();
-                    }
-
-                    for (int i = 0; i < Parts.Count; i++)
-                    {
-                        Parts[i].MoveLeft();
-                    }
-
-                    Rotate();
-
-                } while (IsValidPosition()!=true);
-            }
-        }
-
-        DrawInGrid();
-    }
-
-    public void ClearPart(TetraminoCellModel part)
-    {
-        parts.Remove(part);
-        Destroy(part.gameObject);
-
-        if (Parts.Count == 0)
-        { 
-            Destroy(gameObject);
-        }
-    }
-
-    private bool IsValidPosition()
-    {
-        for (int i = 0; i < Parts.Count; i++)
-        {
-            if (Parts[i] != null)
-            {
-                if (Parts[i].PositionInGrid.x < 0 ||
-                Parts[i].PositionInGrid.x >= grid.Width ||
-                Parts[i].PositionInGrid.y < 0 ||
-                Parts[i].PositionInGrid.y >= grid.Height)
-                {
-                    return false;
+                    Parts[i].MoveLeft();
                 }
+            }
+            DrawInGrid();
+        }
 
-                //проверка, занята ли клеточка с такими координатами
-                if (grid.Cells[Parts[i].PositionInGrid.y, Parts[i].PositionInGrid.x].IsFill)
+        public void MoveDown()
+        {
+            for (int i = 0; i < Parts.Count; i++)
+            {
+                Parts[i].MoveDown();
+            }
+            if (IsValidPosition() == false)
+            {
+                for (int i = 0; i < Parts.Count; i++)
                 {
-                    return false;
+                    Parts[i].MoveUp();
+                }
+                Place();
+            }
+            DrawInGrid();
+        }
+
+        public void MoveDownAfterClear(TetraminoCellModel part)
+        {
+            part.MoveDown();
+            DrawInGrid();
+        }
+
+        public void Rotate()
+        {
+            if (type == TetraminoType.O)
+            {
+                return;
+            }
+
+            for (int i = 0; i < Parts.Count; i++)
+            {
+                Parts[i].Rotate();
+            }
+
+            if (IsValidPosition() == false)
+            {
+                //на левой половинке находимся
+                //меняем положения, пока позиция не станет валидной
+                if (Parts[0].PositionInGrid.x < grid.Width / 2)
+                {
+                    do
+                    {
+                        for (int i = 0; i < Parts.Count; i++)
+                        {
+                            Parts[i].RotateInverse();
+                        }
+
+                        for (int i = 0; i < Parts.Count; i++)
+                        {
+                            Parts[i].MoveRight();
+                        }
+
+                        Rotate();
+
+                    } while (IsValidPosition() != true);
+                }
+                //на правой половинке находимся
+                else if (Parts[0].PositionInGrid.x > grid.Width / 2)
+                {
+                    do
+                    {
+                        for (int i = 0; i < Parts.Count; i++)
+                        {
+                            Parts[i].RotateInverse();
+                        }
+
+                        for (int i = 0; i < Parts.Count; i++)
+                        {
+                            Parts[i].MoveLeft();
+                        }
+
+                        Rotate();
+
+                    } while (IsValidPosition() != true);
                 }
             }
 
+            DrawInGrid();
         }
-        return true;
-    }
 
-    private void DrawInGrid()
-    {
-        for (int i = 0; i < Parts.Count; i++)
+        public void ClearPart(TetraminoCellModel part)
         {
-            if (Parts[i].gameObject != null)
+            parts.Remove(part);
+            Destroy(part.gameObject);
+
+            if (Parts.Count == 0)
             {
-                Parts[i].DrawInGrid();
+                Destroy(gameObject);
             }
         }
-    }
 
-    private void Place()
-    {
-        IsPlaced = true;
-        grid.PlaceInGrid(this);
-        grid.CheckLines();
-    }
+        private bool IsValidPosition()
+        {
+            for (int i = 0; i < Parts.Count; i++)
+            {
+                if (Parts[i] != null)
+                {
+                    if (Parts[i].PositionInGrid.x < 0 ||
+                        Parts[i].PositionInGrid.x >= grid.Width ||
+                        Parts[i].PositionInGrid.y < 0 ||
+                        Parts[i].PositionInGrid.y >= grid.Height)
+                    {
+                        return false;
+                    }
 
-    private void DeleteTetramino()
-    {
-        Destroy(this.gameObject);
-    }
+                    //проверка, занята ли клеточка с такими координатами
+                    if (grid.Cells[Parts[i].PositionInGrid.y, Parts[i].PositionInGrid.x].IsFill)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
 
-    private void OnDestroy()
-    {
-        game.OnGameStarted -= DeleteTetramino;
+        private void DrawInGrid()
+        {
+            for (int i = 0; i < Parts.Count; i++)
+            {
+                if (Parts[i].gameObject != null)
+                {
+                    Parts[i].DrawInGrid();
+                }
+            }
+        }
+
+        private void Place()
+        {
+            IsPlaced = true;
+            grid.PlaceInGrid(this);
+            grid.CheckLines();
+        }
+
+        private void DeleteTetramino()
+        {
+            game.OnGameStarted -= DeleteTetramino;
+            Destroy(this.gameObject);
+        }
     }
-}
