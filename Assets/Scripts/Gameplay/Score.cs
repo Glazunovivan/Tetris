@@ -21,10 +21,4 @@ public sealed class Score
     {
         Count += addedCount;
     }
-
-    public void SaveScore()
-    {
-        //сохраняет счет
-    }
-
 }

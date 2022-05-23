@@ -128,6 +128,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionInGrid: {x: 0, y: 0}
-  fillSprite: {fileID: 0}
-  baseSprite: {fileID: 0}
+  fillSprite: {fileID: 8139324771309346604, guid: 286bddf54ebdb804e9dd239b47c94b22,
+    type: 3}
+  baseSprite: {fileID: 8139324771309346604, guid: 286bddf54ebdb804e9dd239b47c94b22,
+    type: 3}
   spriteRenderer: {fileID: 8941656509932073786}

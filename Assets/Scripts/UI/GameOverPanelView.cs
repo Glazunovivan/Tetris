@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameOverPanelView : MonoBehaviour
@@ -14,10 +15,15 @@ public class GameOverPanelView : MonoBehaviour
         game.OnGameOver += ShowPanel;
         game.OnScoreChanged += UpdateScore;
 
-        buttonExit.onClick.AddListener(game.GameExit);
+        buttonExit.onClick.AddListener(GameExit);
         buttonRestart.onClick.AddListener(game.StartGame);
         
         panel.gameObject.SetActive(false);
+    }
+
+    private void GameExit()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     private void ClosePanel()
@@ -25,14 +31,13 @@ public class GameOverPanelView : MonoBehaviour
         panel.gameObject.SetActive(false);
     }
 
-    private void UpdateScore(string score)
-    {
-        scoreText.text = score;
-    }
-
     private void ShowPanel()
     {
         panel.gameObject.SetActive(true);
-       
+    }
+
+    private void UpdateScore(string score)
+    {
+        scoreText.text = score;
     }
 }

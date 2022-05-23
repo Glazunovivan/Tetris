@@ -2,12 +2,14 @@
 
 public sealed class Grid : MonoBehaviour
 {
-    [SerializeField] private GridCell[,] cells;
-    private Game game;
-
-
     public readonly int Width = 10;
     public readonly int Height = 20;
+
+    [SerializeField] private GridCell prefabCell;
+
+    private GridCell[,] cells;
+    private Game game;
+    
     public GridCell[,] Cells
     {
         get
@@ -20,6 +22,7 @@ public sealed class Grid : MonoBehaviour
     {
         this.game = game;
         this.game.OnGameStarted += ResetCells;
+
         cells = new GridCell[Height, Width];
 
         for (int y = 0; y < Height; y++)
@@ -27,7 +30,9 @@ public sealed class Grid : MonoBehaviour
             for (int x = 0; x < Width; x++)
             {
                 cells[y, x] = transform.GetChild(y).GetChild(x).GetComponent<GridCell>();
-                
+                //var newCell = Instantiate(prefabCell, gameObject.transform);
+                //newCell.Create(x,y);
+                //cells[y,x] = newCell;
             }
         }
     }
@@ -114,7 +119,6 @@ public sealed class Grid : MonoBehaviour
                 {
                     Cells[y - 1, x].IsFill = Cells[y, x].IsFill;
                     Cells[y - 1, x].PartOfTetromino = Cells[y, x].PartOfTetromino;
-                    //Cells[y, x].IsFill = false;
                     Cells[y, x].IsFill = false;
                     Cells[y, x].PartOfTetromino = null;
 

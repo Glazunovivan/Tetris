@@ -1,24 +1,30 @@
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(GameInitializer))]
-public class Game : MonoBehaviour
+public sealed class Game : MonoBehaviour
 {
     public Score Score { get; private set; }
     public bool IsEnded { get; private set; }
+    
+    public Settings Settings;
 
     public event Action OnGameStarted;
     public event Action OnSpawnedTetramino;
     public event Action OnGameOver;
-    public event Action<string> OnScoreChanged;
+    public event Action<string> OnScoreChanged;  
 
     private GameInitializer gameInitializer;
 
-    void Awake()
+    private void Awake()
     {
         gameInitializer = GetComponent<GameInitializer>();
         gameInitializer.Initialize(this);
         
+        Settings = new Settings();
+        Settings.LoadSettings();
+
         StartGame();
     }
 
@@ -26,10 +32,10 @@ public class Game : MonoBehaviour
     {
         IsEnded = false;
         Score = new Score();
-        
-        OnGameStarted?.Invoke();
-        
+
         SetZeroScore();
+        OnGameStarted?.Invoke();
+
         NewTetramino();
     }
 
@@ -42,7 +48,9 @@ public class Game : MonoBehaviour
     public void GameOver()
     {
         IsEnded = true;
-        Score.SaveScore();
+
+        SaveSystem.Save(new SaveData(Score.Count));
+
         StopAllCoroutines();
         
         OnGameOver?.Invoke();
@@ -51,11 +59,6 @@ public class Game : MonoBehaviour
     public void NewTetramino()
     {
         OnSpawnedTetramino?.Invoke();
-    }
-
-    public void GameExit()
-    {
-        Debug.Log("Вышли в главное меню");
     }
 
     private void SetZeroScore()

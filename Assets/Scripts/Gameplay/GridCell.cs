@@ -24,20 +24,16 @@ public class GridCell : Cell
         }
     }
 
-    private void Start()
-    {
-        
-    }
-
     private void SetColor()
     {
         if (isFill)
         {
-            spriteRenderer.color = new Color(0.1f, 0.1f, 0.1f, 1);
+            spriteRenderer.sprite = baseSprite;
+            
         }
         else
         {
-            spriteRenderer.color = new Color(0.1f, 0.1f, 0.1f, 0.2f);
+            spriteRenderer.sprite = fillSprite;
         }
     }
 }

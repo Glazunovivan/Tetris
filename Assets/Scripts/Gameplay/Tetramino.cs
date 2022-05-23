@@ -1,53 +1,51 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-    public class Tetramino : MonoBehaviour
+public sealed class Tetramino : MonoBehaviour
+{
+    public enum TetraminoType
     {
-        public enum TetraminoType
-        {
-            I, J, L, O, S, T, Z
-        }
-
-        public bool IsPlaced { get; private set; }
-        public List<TetraminoCellModel> Parts
+        I, J, L, O, S, T, Z
+    }
+    
+    public bool IsPlaced { get; private set; }
+    public List<TetraminoCellModel> Parts
         {
             get
             {
                 return parts;
             }
-        }
+        } 
+    
+    [SerializeField] private TetraminoType type;
+    [SerializeField] private List<TetraminoCellModel> parts;
 
+    private Grid grid;
+    private Game game;
 
-        [SerializeField] private TetraminoType type;
-        [SerializeField] private List<TetraminoCellModel> parts;
-        private Grid grid;
-        private Game game;
-
-        public void Initialize(GridCell cell, Grid grid, Game game)
+    public Game Game => game;
+    
+    public void Initialize(GridCell cell, Grid grid, Game game)
+    {
+        IsPlaced = false;
+        this.grid = grid;
+        this.game = game;
+    
+        game.OnGameOver += DeleteTetramino;
+        for (int i = 0; i < Parts.Count; i++)
         {
-            IsPlaced = false;
-            this.grid = grid;
-            this.game = game;
-
-            //удаляем все тетрамино при рестарте
-            game.OnGameStarted += DeleteTetramino;
-
-            for (int i = 0; i < Parts.Count; i++)
-            {
-                Parts[i].Create(cell, grid, this);
-            }
-
-
-            if (IsValidPosition() == false)
+            Parts[i].Create(cell, grid, this);
+        }
+    
+        if (IsValidPosition() == false)
             {
                 game.GameOver();
-                DeleteTetramino();
             }
-
-            DrawInGrid();
-        }
-
-        public void MoveLeft()
+    
+        DrawInGrid();
+    }
+    
+    public void MoveLeft()
         {
             for (int i = 0; i < Parts.Count; i++)
             {
@@ -62,8 +60,8 @@ using UnityEngine;
             }
             DrawInGrid();
         }
-
-        public void MoveRight()
+    
+    public void MoveRight()
         {
             for (int i = 0; i < Parts.Count; i++)
             {
@@ -78,8 +76,8 @@ using UnityEngine;
             }
             DrawInGrid();
         }
-
-        public void MoveDown()
+    
+    public void MoveDown()
         {
             for (int i = 0; i < Parts.Count; i++)
             {
@@ -95,14 +93,14 @@ using UnityEngine;
             }
             DrawInGrid();
         }
-
-        public void MoveDownAfterClear(TetraminoCellModel part)
+    
+    public void MoveDownAfterClear(TetraminoCellModel part)
         {
             part.MoveDown();
             DrawInGrid();
         }
-
-        public void Rotate()
+    
+    public void Rotate()
         {
             if (type == TetraminoType.O)
             {
@@ -159,19 +157,19 @@ using UnityEngine;
 
             DrawInGrid();
         }
-
-        public void ClearPart(TetraminoCellModel part)
+    
+    public void ClearPart(TetraminoCellModel part)
         {
             parts.Remove(part);
             Destroy(part.gameObject);
 
             if (Parts.Count == 0)
             {
-                Destroy(gameObject);
+                DeleteTetramino();
             }
         }
-
-        private bool IsValidPosition()
+    
+    private bool IsValidPosition()
         {
             for (int i = 0; i < Parts.Count; i++)
             {
@@ -194,8 +192,8 @@ using UnityEngine;
             }
             return true;
         }
-
-        private void DrawInGrid()
+    
+    private void DrawInGrid()
         {
             for (int i = 0; i < Parts.Count; i++)
             {
@@ -205,17 +203,17 @@ using UnityEngine;
                 }
             }
         }
-
-        private void Place()
+    
+    private void Place()
         {
             IsPlaced = true;
             grid.PlaceInGrid(this);
             grid.CheckLines();
         }
-
-        private void DeleteTetramino()
-        {
-            game.OnGameStarted -= DeleteTetramino;
-            Destroy(this.gameObject);
-        }
+    
+    private void DeleteTetramino()
+    {
+        game.OnGameOver -= DeleteTetramino;
+        Destroy(gameObject);
     }
+}

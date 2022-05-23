@@ -1,22 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public void PlayGame()
+    [SerializeField] private Button startGame;
+    [SerializeField] private Button settings;
+    [SerializeField] private Button leaderBoard;
+    [SerializeField] private Button exit;
+
+    private void Awake()
+    {
+        startGame.onClick.AddListener(PlayGame);
+        settings.onClick.AddListener(OpenSettings);
+        leaderBoard.onClick.AddListener(OpenLeaderboard);
+        exit.onClick.AddListener(Exit);
+    }
+
+    private void PlayGame()
     {
         SceneManager.LoadScene("Game");
     }
     
-    public void Exit()
+    private void OpenSettings()
+    {
+        Debug.Log("Открыли настройки");
+    }
+
+    private void OpenLeaderboard()
+    {
+
+    }
+
+    private void Exit()
     {
         Application.Quit();
     }
 
-    public void Settings()
+    private void OnDestroy()
     {
-
+        startGame.onClick.RemoveListener(PlayGame);
+        settings.onClick.RemoveListener(OpenSettings);
+        leaderBoard.onClick.RemoveListener(OpenLeaderboard);
+        exit.onClick.RemoveListener(Exit);
     }
 }

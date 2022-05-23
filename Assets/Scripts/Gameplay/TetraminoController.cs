@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Tetramino))]
 public class TetraminoController : MonoBehaviour
 {
+    private const int speedDown = 12;
+    
     private Tetramino tetramino;
     private bool isBoost;
     private float speed = 1.5f;
@@ -12,7 +14,10 @@ public class TetraminoController : MonoBehaviour
     private void Start()
     {
         isBoost = false;
-        tetramino = GetComponent<Tetramino>();  
+        tetramino = GetComponent<Tetramino>();
+        
+        speed = tetramino.Game.Settings.Dificult;
+
         StartCoroutine(MoveDown());
     }
 
@@ -59,7 +64,7 @@ public class TetraminoController : MonoBehaviour
         {
             if (isBoost)
             {
-                yield return new WaitForSeconds(speed / 12);
+                yield return new WaitForSeconds(speed / speedDown);
             }
             else
             {

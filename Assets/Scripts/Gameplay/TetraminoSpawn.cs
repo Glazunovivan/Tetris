@@ -22,7 +22,7 @@ public class TetraminoSpawn : MonoBehaviour
 
     public void Spawn()
     {
-        int randTetramino = Random.RandomRange(0, tetraminoes.Length);
+        int randTetramino = Random.Range(0, tetraminoes.Length);
         Tetramino tetramino = Instantiate(tetraminoes[randTetramino]);
         tetramino.Initialize(cellStart, grid, game);
     }
