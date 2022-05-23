@@ -28,12 +28,12 @@ public class GridCell : Cell
     {
         if (isFill)
         {
-            spriteRenderer.sprite = baseSprite;
+            spriteRenderer.sprite = fillSprite;
             
         }
         else
         {
-            spriteRenderer.sprite = fillSprite;
+            spriteRenderer.sprite = baseSprite;
         }
     }
 }

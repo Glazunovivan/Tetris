@@ -31,8 +31,9 @@ public sealed class Grid : MonoBehaviour
             {
                 cells[y, x] = transform.GetChild(y).GetChild(x).GetComponent<GridCell>();
                 //var newCell = Instantiate(prefabCell, gameObject.transform);
-                //newCell.Create(x,y);
-                //cells[y,x] = newCell;
+                //newCell.Create(x, y);
+                //cells[y, x] = newCell;
+                //newCell.DrawInGrid(GetCell(newCell.PositionInGrid).transform.position);
             }
         }
     }

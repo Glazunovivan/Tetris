@@ -11,10 +11,4 @@ public class Cell : MonoBehaviour
             return positionInGrid;
         }
     }
-
-    public void Create(int x, int y)
-    {
-        positionInGrid.x = x;
-        positionInGrid.y = y;
-    }
 }
