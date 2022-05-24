@@ -1,16 +1,13 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Модель объекта Тетромино. Работает сама по себе корректно, вне зависимости от системы координат на сцене
-/// </summary>
-public class TetraminoCellModel : Cell
+public class TetraminoCellView : Cell
 {
     [SerializeField] private Vector2Int PositionRelativeCenter;
 
-    private Tetramino parentTetramino;
+    private TetraminoView parentTetramino;
     private GridView grid;
 
-    public void Create(GridCellView cell, GridView grid, Tetramino parentTetramino)
+    public void Create(GridCellView cell, GridView grid, TetraminoView parentTetramino)
     {
         positionInGrid = cell.PositionInGrid + PositionRelativeCenter;
         this.grid = grid;

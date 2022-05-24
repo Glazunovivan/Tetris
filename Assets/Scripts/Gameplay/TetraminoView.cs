@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class Tetramino : MonoBehaviour
+public sealed class TetraminoView : MonoBehaviour
 {
     public enum TetraminoType
     {
         I, J, L, O, S, T, Z
     }
+
+    //различные спрайты, которые могут отображаться на части тетромино
+    [SerializeField] private List<Sprite> sprites;
     
     public bool IsPlaced { get; private set; }
-    public List<TetraminoCellModel> Parts
+    public List<TetraminoCellView> Parts
         {
             get
             {
@@ -18,7 +21,7 @@ public sealed class Tetramino : MonoBehaviour
         } 
     
     [SerializeField] private TetraminoType type;
-    [SerializeField] private List<TetraminoCellModel> parts;
+    [SerializeField] private List<TetraminoCellView> parts;
 
     private GridView grid;
     private Game game;
@@ -94,7 +97,7 @@ public sealed class Tetramino : MonoBehaviour
             DrawInGrid();
         }
     
-    public void MoveDownAfterClear(TetraminoCellModel part)
+    public void MoveDownAfterClear(TetraminoCellView part)
         {
             part.MoveDown();
             DrawInGrid();
@@ -158,7 +161,7 @@ public sealed class Tetramino : MonoBehaviour
             DrawInGrid();
         }
     
-    public void ClearPart(TetraminoCellModel part)
+    public void ClearPart(TetraminoCellView part)
         {
             parts.Remove(part);
             Destroy(part.gameObject);
@@ -193,16 +196,16 @@ public sealed class Tetramino : MonoBehaviour
             return true;
         }
     
-    private void DrawInGrid()
+    public void DrawInGrid()
+    {
+        for (int i = 0; i < Parts.Count; i++)
         {
-            for (int i = 0; i < Parts.Count; i++)
+            if (Parts[i].gameObject != null)
             {
-                if (Parts[i].gameObject != null)
-                {
-                    Parts[i].DrawInGrid();
-                }
+                Parts[i].DrawInGrid();
             }
         }
+    }
     
     private void Place()
         {

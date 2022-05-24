@@ -8,7 +8,7 @@ public class GridCellView : Cell
 
     private bool isFill;
     
-    public TetraminoCellModel PartOfTetromino { get; set; }
+    public TetraminoCellView PartOfTetromino { get; set; }
 
     public void SetPosition(int x, int y)
     {

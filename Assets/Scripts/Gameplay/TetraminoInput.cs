@@ -2,39 +2,47 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Tetramino))]
-public class TetraminoController : MonoBehaviour
+using Glazunov.Tetris.Model;
+
+[RequireComponent(typeof(TetraminoView))]
+public class TetraminoInput : MonoBehaviour
 {
     private const int speedDown = 12;
     
-    private Tetramino tetramino;
+    private TetraminoView tetraminoView;
+    private TetraminoController tetraminoController;
     private bool isBoost;
     private float speed = 1.5f;
 
     private void Start()
     {
         isBoost = false;
-        tetramino = GetComponent<Tetramino>();
+        tetraminoView = GetComponent<TetraminoView>();
         
-        speed = tetramino.Game.Settings.Dificult;
+        speed = tetraminoView.Game.Settings.Dificult;
 
         StartCoroutine(MoveDown());
+    }
+
+    public void SetTetramino(TetraminoController tetraminoController)
+    {
+        this.tetraminoController = tetraminoController;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            tetramino.MoveLeft();
+            tetraminoController.MoveLeft();
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            tetramino.MoveRight();
+            tetraminoController.MoveRight();
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            tetramino.Rotate();
+            tetraminoController.Rotate();
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -51,7 +59,7 @@ public class TetraminoController : MonoBehaviour
             StartCoroutine(MoveDown());
         }
 
-        if (tetramino.IsPlaced)
+        if (tetraminoView.IsPlaced)
         {
             StopAllCoroutines();
             enabled = false;
@@ -70,7 +78,7 @@ public class TetraminoController : MonoBehaviour
             {
                 yield return new WaitForSeconds(speed);
             }
-            tetramino.MoveDown();
+            tetraminoController.MoveDown();
         }
     }
 }

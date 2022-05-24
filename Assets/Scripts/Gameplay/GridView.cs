@@ -43,7 +43,7 @@ public sealed class GridView : MonoBehaviour
         return cells[position.y, position.x];
     }
 
-    public void PlaceInGrid(Tetramino tetramino)
+    public void PlaceInGrid(TetraminoView tetramino)
     {
         for (int i = 0; i < tetramino.Parts.Count; i++)
         {
@@ -81,7 +81,7 @@ public sealed class GridView : MonoBehaviour
         }
     }
 
-    private void AddInGrid(TetraminoCellModel part)
+    private void AddInGrid(TetraminoCellView part)
     {
         cells[part.PositionInGrid.y, part.PositionInGrid.x].IsFill = true;
 
