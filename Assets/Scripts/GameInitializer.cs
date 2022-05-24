@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
 {
-    [SerializeField] private Grid grid;
+    [SerializeField] private GridView grid;
     [SerializeField] private TetraminoSpawn spawner;
     [SerializeField] private ScoreView scoreView;
     [SerializeField] private GameOverPanelView gameOverPanelView;

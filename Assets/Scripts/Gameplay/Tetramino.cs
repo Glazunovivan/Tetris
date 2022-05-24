@@ -20,12 +20,12 @@ public sealed class Tetramino : MonoBehaviour
     [SerializeField] private TetraminoType type;
     [SerializeField] private List<TetraminoCellModel> parts;
 
-    private Grid grid;
+    private GridView grid;
     private Game game;
 
     public Game Game => game;
     
-    public void Initialize(GridCell cell, Grid grid, Game game)
+    public void Initialize(GridCellView cell, GridView grid, Game game)
     {
         IsPlaced = false;
         this.grid = grid;

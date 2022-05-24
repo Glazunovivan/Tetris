@@ -8,9 +8,9 @@ public class TetraminoCellModel : Cell
     [SerializeField] private Vector2Int PositionRelativeCenter;
 
     private Tetramino parentTetramino;
-    private Grid grid;
+    private GridView grid;
 
-    public void Create(GridCell cell, Grid grid, Tetramino parentTetramino)
+    public void Create(GridCellView cell, GridView grid, Tetramino parentTetramino)
     {
         positionInGrid = cell.PositionInGrid + PositionRelativeCenter;
         this.grid = grid;

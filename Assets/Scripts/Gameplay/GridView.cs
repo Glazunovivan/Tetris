@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 
-public sealed class Grid : MonoBehaviour
+public sealed class GridView : MonoBehaviour
 {
     public readonly int Width = 10;
     public readonly int Height = 20;
 
-    [SerializeField] private GridCell prefabCell;
+    [SerializeField] private GridCellView prefabCell;
 
-    private GridCell[,] cells;
+    private GridCellView[,] cells;
     private Game game;
     
-    public GridCell[,] Cells
+    public GridCellView[,] Cells
     {
         get
         {
@@ -23,22 +23,22 @@ public sealed class Grid : MonoBehaviour
         this.game = game;
         this.game.OnGameStarted += ResetCells;
 
-        cells = new GridCell[Height, Width];
+        cells = new GridCellView[Height, Width];
 
         for (int y = 0; y < Height; y++)
         {
             for (int x = 0; x < Width; x++)
             {
-                cells[y, x] = transform.GetChild(y).GetChild(x).GetComponent<GridCell>();
-                //var newCell = Instantiate(prefabCell, gameObject.transform);
-                //newCell.Create(x, y);
-                //cells[y, x] = newCell;
-                //newCell.DrawInGrid(GetCell(newCell.PositionInGrid).transform.position);
+                var instantiate = Instantiate(prefabCell, transform);
+                var position = new Vector3(x, y, 0);
+                instantiate.transform.localPosition = position;
+                instantiate.SetPosition(x, y);
+                cells[y,x] = instantiate;
             }
         }
     }
 
-    public GridCell GetCell(Vector2Int position)
+    public GridCellView GetCell(Vector2Int position)
     {
         return cells[position.y, position.x];
     }

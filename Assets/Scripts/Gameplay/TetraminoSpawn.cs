@@ -7,10 +7,10 @@ public class TetraminoSpawn : MonoBehaviour
     [SerializeField] private Tetramino[] tetraminoes;
 
     private Game game;
-    private Grid grid;
-    private GridCell cellStart;
+    private GridView grid;
+    private GridCellView cellStart;
 
-    public void Initialize(Game game, Grid grid)
+    public void Initialize(Game game, GridView grid)
     {
         this.game = game;
         this.grid = grid;

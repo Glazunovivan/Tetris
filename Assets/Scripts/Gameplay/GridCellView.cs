@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GridCell : Cell
+public class GridCellView : Cell
 {
     [SerializeField] private Sprite fillSprite;
     [SerializeField] private Sprite baseSprite;
@@ -9,6 +9,11 @@ public class GridCell : Cell
     private bool isFill;
     
     public TetraminoCellModel PartOfTetromino { get; set; }
+
+    public void SetPosition(int x, int y)
+    {
+        positionInGrid = new Vector2Int(x, y);
+    }
 
     public bool IsFill
     {
