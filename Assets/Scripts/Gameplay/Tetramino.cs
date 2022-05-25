@@ -22,7 +22,6 @@ public sealed class Tetramino : MonoBehaviour
 
     private Grid grid;
     private Game game;
-
     public Game Game => game;
     
     public void Initialize(GridCell cell, Grid grid, Game game)
@@ -116,7 +115,7 @@ public sealed class Tetramino : MonoBehaviour
             {
                 //на левой половинке находимся
                 //меняем положения, пока позиция не станет валидной
-                if (Parts[0].PositionInGrid.x < grid.Width / 2)
+                if (Parts[0].PositionInGrid.x < game.Width / 2)
                 {
                     do
                     {
@@ -135,7 +134,7 @@ public sealed class Tetramino : MonoBehaviour
                     } while (IsValidPosition() != true);
                 }
                 //на правой половинке находимся
-                else if (Parts[0].PositionInGrid.x > grid.Width / 2)
+                else if (Parts[0].PositionInGrid.x > game.Width / 2)
                 {
                     do
                     {
@@ -176,9 +175,9 @@ public sealed class Tetramino : MonoBehaviour
                 if (Parts[i] != null)
                 {
                     if (Parts[i].PositionInGrid.x < 0 ||
-                        Parts[i].PositionInGrid.x >= grid.Width ||
+                        Parts[i].PositionInGrid.x >= game.Width ||
                         Parts[i].PositionInGrid.y < 0 ||
-                        Parts[i].PositionInGrid.y >= grid.Height)
+                        Parts[i].PositionInGrid.y >= game.Height)
                     {
                         return false;
                     }

@@ -2,13 +2,10 @@
 
 public sealed class Grid : MonoBehaviour
 {
-    public readonly int Width = 10;
-    public readonly int Height = 20;
-
     [SerializeField] private GridCell prefabCell;
 
-    private GridCell[,] cells;
     private Game game;
+    private GridCell[,] cells;
     
     public GridCell[,] Cells
     {
@@ -23,11 +20,11 @@ public sealed class Grid : MonoBehaviour
         this.game = game;
         this.game.OnGameStarted += ResetCells;
 
-        cells = new GridCell[Height, Width];
+        cells = new GridCell[game.Height, game.Width];
 
-        for (int y = 0; y < Height; y++)
+        for (int y = 0; y < game.Height; y++)
         {
-            for (int x = 0; x < Width; x++)
+            for (int x = 0; x < game.Width; x++)
             {
                 var inst = Instantiate(prefabCell, gameObject.transform);
                 inst.SetPosition(new Vector2Int(x, y));
@@ -58,7 +55,7 @@ public sealed class Grid : MonoBehaviour
 
     public void CheckLines()
     {
-        for (int y = Height-1; y >= 0; y--)
+        for (int y = game.Height-1; y >= 0; y--)
         {
             if (IsRowFull(y))
             {
@@ -72,9 +69,9 @@ public sealed class Grid : MonoBehaviour
 
     private void ResetCells()
     {
-        for (int y = 0; y < Height; y++)
+        for (int y = 0; y < game.Height; y++)
         {
-            for (int x = 0; x < Width; x++)
+            for (int x = 0; x < game.Width; x++)
             {
                 cells[y, x].IsFill = false;
             }
@@ -91,7 +88,7 @@ public sealed class Grid : MonoBehaviour
 
     private bool IsRowFull(int y)
     {
-        for (int x = 0; x < Width; x++)
+        for (int x = 0; x < game.Width; x++)
         {
             if (cells[y, x].IsFill == false)
             {
@@ -103,7 +100,7 @@ public sealed class Grid : MonoBehaviour
 
     private void ClearLine(int y)
     {
-        for (int x = 0; x < Width; x++)
+        for (int x = 0; x < game.Width; x++)
         {
             cells[y, x].IsFill = false;
             Cells[y, x].PartOfTetromino.Clear();
@@ -112,9 +109,9 @@ public sealed class Grid : MonoBehaviour
 
     private void Down(int i)
     {
-        for (int y = i; y < Height; y++)
+        for (int y = i; y < game.Height; y++)
         {
-            for (int x = 0; x < Width; x++)
+            for (int x = 0; x < game.Width; x++)
             {
                 if (Cells[y, x].IsFill)
                 {

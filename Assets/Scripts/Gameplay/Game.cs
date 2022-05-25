@@ -12,7 +12,10 @@ public sealed class Game
     public event Action OnGameStarted;
     public event Action OnSpawnedTetramino;
     public event Action OnGameOver;
-    public event Action<string> OnScoreChanged;  
+    public event Action<string> OnScoreChanged;
+
+    public readonly int Width = 10;
+    public readonly int Height = 20;
 
     public Game()
     {
