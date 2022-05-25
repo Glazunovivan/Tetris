@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Glazunov.Tetris.Model;
+
 
 public sealed class TetraminoView : MonoBehaviour
 {
@@ -27,7 +29,8 @@ public sealed class TetraminoView : MonoBehaviour
     private Game game;
 
     public Game Game => game;
-    
+
+
     public void Initialize(GridCellView cell, GridView grid, Game game)
     {
         IsPlaced = false;
@@ -196,6 +199,26 @@ public sealed class TetraminoView : MonoBehaviour
             return true;
         }
     
+    public void DrawInGrid(Vector3 position)
+    {
+        //for (int i = 0;  i < tetramino.Parts.Length; i++)
+        //{
+        //    if (tetramino.Parts[i] != null)
+        //    {
+        //        transform.position = position;
+        //    }
+        //}
+        transform.position = position;
+
+        //for (int i = 0; i < Parts.Count; i++)
+        //{
+        //    if (Parts[i].gameObject != null)
+        //    {
+        //        Parts[i].DrawInGrid();
+        //    }
+        //}
+    }
+
     public void DrawInGrid()
     {
         for (int i = 0; i < Parts.Count; i++)
@@ -206,7 +229,7 @@ public sealed class TetraminoView : MonoBehaviour
             }
         }
     }
-    
+
     private void Place()
         {
             IsPlaced = true;

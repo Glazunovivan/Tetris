@@ -7,6 +7,16 @@ public class TetraminoCellView : Cell
     private TetraminoView parentTetramino;
     private GridView grid;
 
+    [SerializeField] private Sprite sprite;
+
+    public void OnEnable()
+    {
+        if (sprite == null)
+        {
+            sprite = GetComponent<Sprite>();
+        }
+    }
+
     public void Create(GridCellView cell, GridView grid, TetraminoView parentTetramino)
     {
         positionInGrid = cell.PositionInGrid + PositionRelativeCenter;

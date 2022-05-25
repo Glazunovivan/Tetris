@@ -9,7 +9,6 @@ public class TetraminoInput : MonoBehaviour
 {
     private const int speedDown = 12;
     
-    private TetraminoView tetraminoView;
     private TetraminoController tetraminoController;
     private bool isBoost;
     private float speed = 1.5f;
@@ -17,52 +16,52 @@ public class TetraminoInput : MonoBehaviour
     private void Start()
     {
         isBoost = false;
-        tetraminoView = GetComponent<TetraminoView>();
-        
-        speed = tetraminoView.Game.Settings.Dificult;
-
-        StartCoroutine(MoveDown());
     }
 
     public void SetTetramino(TetraminoController tetraminoController)
     {
         this.tetraminoController = tetraminoController;
+
+        StartCoroutine(MoveDown());
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (tetraminoController != null)
         {
-            tetraminoController.MoveLeft();
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            tetraminoController.MoveRight();
-        }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                tetraminoController.MoveLeft();
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                tetraminoController.MoveRight();
+            }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            tetraminoController.Rotate();
-        }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                tetraminoController.Rotate();
+            }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            isBoost = true;
-            StopAllCoroutines();
-            StartCoroutine(MoveDown());
-        }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                isBoost = true;
+                StopAllCoroutines();
+                StartCoroutine(MoveDown());
+            }
 
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            isBoost = false;
-            StopAllCoroutines();
-            StartCoroutine(MoveDown());
-        }
+            if (Input.GetKeyUp(KeyCode.DownArrow))
+            {
+                isBoost = false;
+                StopAllCoroutines();
+                StartCoroutine(MoveDown());
+            }
 
-        if (tetraminoView.IsPlaced)
-        {
-            StopAllCoroutines();
-            enabled = false;
+            if (tetraminoController.IsPlaced())
+            {
+                StopAllCoroutines();
+                enabled = false;
+            }
         }
     }
 

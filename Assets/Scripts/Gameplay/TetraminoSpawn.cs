@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Glazunov.Tetris.Model;
+using Glazunov.Tetris.Presenters;
 
 public class TetraminoSpawn : MonoBehaviour
 {
     [SerializeField] private TetraminoView[] tetraminoes;
 
+    [SerializeField] private GameObject prefabTetramino;
+
     private Game game;
     private GridView grid;
     private GridCellView cellStart;
+
+    private TetraminoPresenter tetraminoPresenter;
+    private Tetramino tetraminoModel;
 
     public void Initialize(Game game, GridView grid)
     {
@@ -23,41 +29,56 @@ public class TetraminoSpawn : MonoBehaviour
 
     public void Spawn()
     {
-        int randTetramino = Random.Range(0, tetraminoes.Length);
-
-        Tetramino tetramino;
+        int randTetramino = Random.Range(0, 7);
         
+        //сначала создаем модель
         switch (randTetramino)
         {
             case 0:
-                tetramino = new TetraminoI();
+                tetraminoModel = new TetraminoI();
                 break;
 
             case 1:
-                tetramino = new TetraminoJ();
+                tetraminoModel = new TetraminoJ();
                 break;
 
             case 2:
-                tetramino = new TetraminoL();
+                tetraminoModel = new TetraminoL();
                 break;
 
             case 3:
-                tetramino = new TetraminoO();
+                tetraminoModel = new TetraminoO();
                 break;
 
             case 4:
-                tetramino = new TetraminoS();
+                tetraminoModel = new TetraminoS();
                 break;
 
             case 5:
-                tetramino = new TetraminoT();
+                tetraminoModel = new TetraminoT();
                 break;
 
             case 6:
-                tetramino = new TetraminoZ();
+                tetraminoModel = new TetraminoZ();
+                break;
+            default:
+                tetraminoModel = new TetraminoJ();
                 break;
         }
 
+        //затем объект с View и контроллером
+        var instantiate = Instantiate(prefabTetramino, transform);
+        instantiate.AddComponent<TetraminoInput>();
+        instantiate.GetComponent<TetraminoInput>().SetTetramino(new TetraminoController(tetraminoModel));
+
+        var tetraminoView = instantiate.GetComponent<TetraminoView>();
+
+        //и соединяем
+        tetraminoPresenter = new TetraminoPresenter(tetraminoModel, tetraminoView);
+
+        tetraminoModel.Draw();
+
+        Debug.Log("Заспавнили тетромино");
 
         //TetraminoView tetramino = Instantiate(tetraminoes[randTetramino]);
         //tetramino.Initialize(cellStart, grid, game);

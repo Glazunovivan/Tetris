@@ -31,6 +31,7 @@ public sealed class GridView : MonoBehaviour
             {
                 var instantiate = Instantiate(prefabCell, transform);
                 var position = new Vector3(x, y, 0);
+
                 instantiate.transform.localPosition = position;
                 instantiate.SetPosition(x, y);
                 cells[y,x] = instantiate;

@@ -19,12 +19,13 @@ namespace Glazunov.Tetris.Presenters
 
         public void Enable()
         {
-
+            _model.OnDraw += Draw;
+            _model.OnPlaced += Disable;
         }
 
-        public void DrawInGrid()
+        public void Draw()
         {
-            _view.DrawInGrid();
+            _view.DrawInGrid(_model.Position);
         }
 
         public void Disable()

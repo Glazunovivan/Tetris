@@ -89,5 +89,10 @@ namespace Glazunov.Tetris.Model
                 tetramino.Parts[i].Y += tetramino.Parts[i].Y;
             }
         }
+
+        public bool IsPlaced()
+        {
+            return tetramino.IsPlaced;
+        }
     }
 }

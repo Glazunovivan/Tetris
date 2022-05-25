@@ -643,7 +643,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1358574022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.97, y: 0.45, z: 0}
+  m_LocalPosition: {x: -4.97, y: 0.45, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1354,6 +1354,8 @@ MonoBehaviour:
   - {fileID: 296768241481453200, guid: 2ae04d596d14df0459a3c9d8f207e7b4, type: 3}
   - {fileID: 7483314784187231438, guid: db3bc47d2ea74a5448bacb0996c0c781, type: 3}
   - {fileID: 364303279135306986, guid: 272ed67ae8745b9468a67af874c8f2cb, type: 3}
+  prefabTetramino: {fileID: 9072416334087213999, guid: 0507da913726944408d2ea7a2cbb3132,
+    type: 3}
 --- !u!1 &1854845398
 GameObject:
   m_ObjectHideFlags: 0
