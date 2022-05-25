@@ -10,6 +10,12 @@ public class GridCell : Cell
     
     public TetraminoCellModel PartOfTetromino { get; set; }
 
+    public void SetPosition(Vector2Int position)
+    {
+        positionInGrid.x = position.x;
+        positionInGrid.y = position.y;
+    }
+
     public bool IsFill
     {
         get
