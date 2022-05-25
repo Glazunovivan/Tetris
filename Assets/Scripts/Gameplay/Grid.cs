@@ -29,14 +29,10 @@ public sealed class Grid : MonoBehaviour
         {
             for (int x = 0; x < Width; x++)
             {
-                //cells[y, x] = transform.GetChild(y).GetChild(x).GetComponent<GridCell>();
-                //var newCell = Instantiate(prefabCell, gameObject.transform);
-                //newCell.Create(x,y);
-                //cells[y,x] = newCell;
-
                 var inst = Instantiate(prefabCell, gameObject.transform);
                 inst.SetPosition(new Vector2Int(x, y));
                 inst.transform.localPosition = new Vector3(x, y, 1);
+
                 cells[y, x] = inst;
             }
         }

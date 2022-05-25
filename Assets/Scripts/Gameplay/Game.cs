@@ -2,8 +2,7 @@ using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(GameInitializer))]
-public sealed class Game : MonoBehaviour
+public sealed class Game
 {
     public Score Score { get; private set; }
     public bool IsEnded { get; private set; }
@@ -15,13 +14,8 @@ public sealed class Game : MonoBehaviour
     public event Action OnGameOver;
     public event Action<string> OnScoreChanged;  
 
-    private GameInitializer gameInitializer;
-
-    private void Awake()
+    public Game()
     {
-        gameInitializer = GetComponent<GameInitializer>();
-        gameInitializer.Initialize(this);
-        
         Settings = new Settings();
         Settings.LoadSettings();
 
@@ -48,10 +42,7 @@ public sealed class Game : MonoBehaviour
     public void GameOver()
     {
         IsEnded = true;
-
         SaveSystem.Save(new SaveData(Score.Count));
-
-        StopAllCoroutines();
         
         OnGameOver?.Invoke();
     } 

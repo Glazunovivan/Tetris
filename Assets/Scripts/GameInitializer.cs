@@ -7,12 +7,16 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private ScoreView scoreView;
     [SerializeField] private GameOverPanelView gameOverPanelView;
 
-    public void Initialize(Game game)
+
+    private void OnEnable()
     {
+        Game game = new Game();
+
         grid.Initialize(game);
         spawner.Initialize(game, grid);
-
         scoreView.Initialize(game);
         gameOverPanelView.Initialize(game);
+
+        game.StartGame();
     }
 }
