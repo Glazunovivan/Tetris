@@ -1,45 +1,14 @@
-﻿using UnityEngine;
-
-public class GridCell : Cell
+public class GridCell
 {
-    [SerializeField] private Sprite fillSprite;
-    [SerializeField] private Sprite baseSprite;
-    [SerializeField] private SpriteRenderer spriteRenderer; 
+    public int X { get; private set; }
+    public int Y { get; private set; }
+    public bool IsFill { get; set; } = false;
 
-    private bool isFill;
-    
-    public TetraminoCellModel PartOfTetromino { get; set; }
-
-    public void SetPosition(Vector2Int position)
+    public GridCell(int x, int y)
     {
-        positionInGrid.x = position.x;
-        positionInGrid.y = position.y;
+        X = x;
+        Y = y;
+        IsFill = false;
     }
 
-    public bool IsFill
-    {
-        get
-        {
-            return isFill;
-        }
-        set
-        {
-            isFill = value;
-            //перекрашиваем
-            SetColor();
-        }
-    }
-
-    private void SetColor()
-    {
-        if (isFill)
-        {
-            spriteRenderer.sprite = baseSprite;
-            
-        }
-        else
-        {
-            spriteRenderer.sprite = fillSprite;
-        }
-    }
 }

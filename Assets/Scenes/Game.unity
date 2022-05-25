@@ -848,7 +848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db23b204473e64438e79f018454d797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 1358574024}
+  gridView: {fileID: 1358574024}
   spawner: {fileID: 1844016194}
   scoreView: {fileID: 1810260859}
   gameOverPanelView: {fileID: 2143670106}
@@ -888,7 +888,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.4292453, g: 0.802127, b: 1, a: 0}
+  m_BackGroundColor: {r: 0.495283, g: 0.8235355, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1333,14 +1333,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0844670f93f356f4d94650b7b7bd8525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tetraminoes:
-  - {fileID: 115477453230472240, guid: 29310cb871cf5cd4883f7d6c4d1e3f54, type: 3}
-  - {fileID: 8498319734306501911, guid: 2b49a045291a804448d0dec1824a679c, type: 3}
-  - {fileID: 9197489414907469093, guid: 7b80bddd5b69e0f4a8c6dde759e43c59, type: 3}
-  - {fileID: 6591259570846207363, guid: 387a37f05a5f1c642997688bc7800fed, type: 3}
-  - {fileID: 296768241481453200, guid: 2ae04d596d14df0459a3c9d8f207e7b4, type: 3}
-  - {fileID: 7483314784187231438, guid: db3bc47d2ea74a5448bacb0996c0c781, type: 3}
-  - {fileID: 364303279135306986, guid: 272ed67ae8745b9468a67af874c8f2cb, type: 3}
+  prefabTetramino: {fileID: 1224886350115454985, guid: 48dc0883c13ad5b4ba42d3b46c90b5e8,
+    type: 3}
 --- !u!1 &1854845398
 GameObject:
   m_ObjectHideFlags: 0

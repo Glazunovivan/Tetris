@@ -1,128 +1,47 @@
-﻿using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public sealed class Grid : MonoBehaviour
+public class Grid
 {
-    [SerializeField] private GridCell prefabCell;
+    public int Width;
+    public int Height;
 
+    public GridCell[,] Cells;
     private Game game;
-    private GridCell[,] cells;
-    
-    public GridCell[,] Cells
+
+    public Grid(int width, int height, Game game)
     {
-        get
+        Width = width;
+        Height = height;
+
+        Cells = new GridCell[Height, Width];
+
+        for (int y = 0; y < Height; y++)
         {
-            return cells;
-        }
-    }
-
-    public void Initialize(Game game)
-    {
-        this.game = game;
-        this.game.OnGameStarted += ResetCells;
-
-        cells = new GridCell[game.Height, game.Width];
-
-        for (int y = 0; y < game.Height; y++)
-        {
-            for (int x = 0; x < game.Width; x++)
+            for (int x = 0; x < Width; x++)
             {
-                var inst = Instantiate(prefabCell, gameObject.transform);
-                inst.SetPosition(new Vector2Int(x, y));
-                inst.transform.localPosition = new Vector3(x, y, 1);
-
-                cells[y, x] = inst;
+                Cells[y, x] = new GridCell(x,y);
             }
         }
     }
 
-    public GridCell GetCell(Vector2Int position)
-    {
-        return cells[position.y, position.x];
-    }
-
-    public void PlaceInGrid(Tetramino tetramino)
+    public void PlaceTetramino(TetraminoView tetramino)
     {
         for (int i = 0; i < tetramino.Parts.Count; i++)
         {
-            AddInGrid(tetramino.Parts[i]);
+            Cells[tetramino.Parts[i].PositionInGrid.y, tetramino.Parts[i].PositionInGrid.x].IsFill = true;
         }
 
         if (!game.IsEnded)
         {
-            game.NewTetramino();
+            //����� ���������
         }
     }
 
-    public void CheckLines()
+    public GridCell GetCell(int x, int y)
     {
-        for (int y = game.Height-1; y >= 0; y--)
-        {
-            if (IsRowFull(y))
-            {
-                ClearLine(y);
-                Down(y);
-
-                game.UpdateScore();
-            }
-        }
-    }
-
-    private void ResetCells()
-    {
-        for (int y = 0; y < game.Height; y++)
-        {
-            for (int x = 0; x < game.Width; x++)
-            {
-                cells[y, x].IsFill = false;
-            }
-        }
-    }
-
-    private void AddInGrid(TetraminoCellModel part)
-    {
-        cells[part.PositionInGrid.y, part.PositionInGrid.x].IsFill = true;
-
-        //сохраняем ссылку на часть тетромино, чтобы потом очистить клетку
-        cells[part.PositionInGrid.y, part.PositionInGrid.x].PartOfTetromino = part;
-    }
-
-    private bool IsRowFull(int y)
-    {
-        for (int x = 0; x < game.Width; x++)
-        {
-            if (cells[y, x].IsFill == false)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void ClearLine(int y)
-    {
-        for (int x = 0; x < game.Width; x++)
-        {
-            cells[y, x].IsFill = false;
-            Cells[y, x].PartOfTetromino.Clear();
-        }
-    }
-
-    private void Down(int i)
-    {
-        for (int y = i; y < game.Height; y++)
-        {
-            for (int x = 0; x < game.Width; x++)
-            {
-                if (Cells[y, x].IsFill)
-                {
-                    Cells[y - 1, x].IsFill = Cells[y, x].IsFill;
-                    Cells[y - 1, x].PartOfTetromino = Cells[y, x].PartOfTetromino;
-                    Cells[y, x].IsFill = false;
-                    Cells[y, x].PartOfTetromino = null;
-
-                    Cells[y-1, x].PartOfTetromino.MoveDownAfterClear();
-                }
-            }
-        }
+        return Cells[y, x];
     }
 }

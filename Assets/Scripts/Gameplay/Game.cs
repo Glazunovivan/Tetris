@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 public sealed class Game
 {
     public Score Score { get; private set; }
-    public bool IsEnded { get; private set; }
+    public bool IsEnded { get; private set; } = false;
     
     public Settings Settings;
+    public Grid Grid { get; set; }
 
     public event Action OnGameStarted;
     public event Action OnSpawnedTetramino;
@@ -19,6 +20,8 @@ public sealed class Game
 
     public Game()
     {
+        Grid = new Grid(Width, Height, this);
+
         Settings = new Settings();
         Settings.LoadSettings();
 
@@ -29,7 +32,6 @@ public sealed class Game
     {
         IsEnded = false;
         Score = new Score();
-
         SetZeroScore();
         OnGameStarted?.Invoke();
 

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Tetramino))]
+[RequireComponent(typeof(TetraminoView))]
 public class TetraminoController : MonoBehaviour
 {
     private const int speedDown = 12;
@@ -14,9 +14,8 @@ public class TetraminoController : MonoBehaviour
     private void Start()
     {
         isBoost = false;
-        tetramino = GetComponent<Tetramino>();
-        
-        speed = tetramino.Game.Settings.Dificult;
+        //tetramino = GetComponent<TetraminoView>();
+        //speed = tetramino.Game.Settings.Dificult;
 
         StartCoroutine(MoveDown());
     }
@@ -51,11 +50,16 @@ public class TetraminoController : MonoBehaviour
             StartCoroutine(MoveDown());
         }
 
-        if (tetramino.IsPlaced)
-        {
-            StopAllCoroutines();
-            enabled = false;
-        }
+        //if (tetramino.IsPlaced)
+        //{
+        //    StopAllCoroutines();
+        //    enabled = false;
+        //}
+    }
+
+    public void SetTetramino(Tetramino tetramino)
+    {
+        this.tetramino = tetramino;
     }
 
     private IEnumerator MoveDown()
