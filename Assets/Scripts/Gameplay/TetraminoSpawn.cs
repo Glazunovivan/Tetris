@@ -3,6 +3,7 @@
 public class TetraminoSpawn : MonoBehaviour
 {
     [SerializeField] private TetraminoView prefabTetramino;
+    [SerializeField] private GridView gridView;
 
     private Game _game;
     private Grid _grid;
@@ -11,11 +12,10 @@ public class TetraminoSpawn : MonoBehaviour
     public void Initialize(Game game, Grid grid)
     {
         _game = game;
+        _game.OnSpawnedTetramino += Spawn;        
+        
         _grid = grid;
-
         _cellStart = _grid.GetCell(5,18);
-
-         _game.OnSpawnedTetramino += Spawn;        
     }
 
     public void Spawn()
@@ -50,14 +50,15 @@ public class TetraminoSpawn : MonoBehaviour
                 tetramino = new TetraminoI();
                 break;
         }
+
         tetramino.SetGrid(_grid);
 
         TetraminoView tetraminoView = Instantiate(prefabTetramino);
-        tetraminoView.Initialize(tetramino, _cellStart, FindObjectOfType<GridView>());
+        tetraminoView.Initialize(tetramino, _cellStart, gridView);
         tetraminoView.GetComponent<TetraminoController>().SetTetramino(tetramino);
     }
 
-    private void OnEnable()
+    private void OnDestroy()
     {
         _game.OnSpawnedTetramino -= Spawn;
     }

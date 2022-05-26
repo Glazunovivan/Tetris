@@ -17,9 +17,9 @@ public sealed class GridView : MonoBehaviour
 
         cells = new GridCellView[grid.Height, grid.Width];
 
-        for (int y = 0; y < game.Height; y++)
+        for (int y = 0; y < _grid.Height; y++)
         {
-            for (int x = 0; x < game.Width; x++)
+            for (int x = 0; x < _grid.Width; x++)
             {
                 var inst = Instantiate(prefabCell, transform);
                 inst.Initialize(grid.Cells[y,x]);
@@ -34,18 +34,18 @@ public sealed class GridView : MonoBehaviour
         return cells[y, x];
     }
 
-    public void PlaceInGrid(TetraminoView tetramino)
-    {
-        for (int i = 0; i < tetramino.Parts.Count; i++)
-        {
-            AddInGrid(tetramino.Parts[i]);
-        }
+    //public void PlaceInGrid(TetraminoView tetramino)
+    //{
+    //    for (int i = 0; i < tetramino.Parts.Count; i++)
+    //    {
+    //        AddInGrid(tetramino.Parts[i]);
+    //    }
 
-        if (!_game.IsEnded)
-        {
-            _game.NewTetramino();
-        }
-    }
+    //    if (!_game.IsEnded)
+    //    {
+    //        _game.NewTetramino();
+    //    }
+    //}
 
     public void CheckLines()
     {
@@ -82,7 +82,7 @@ public sealed class GridView : MonoBehaviour
 
     private bool IsRowFull(int y)
     {
-        for (int x = 0; x < _game.Width; x++)
+        for (int x = 0; x < _grid.Width; x++)
         {
             //if (cells[y, x].IsFill == false)
             //{
@@ -94,7 +94,7 @@ public sealed class GridView : MonoBehaviour
 
     private void ClearLine(int y)
     {
-        for (int x = 0; x < _game.Width; x++)
+        for (int x = 0; x < _grid.Width; x++)
         {
             //cells[y, x].IsFill = false;
             //Cells[y, x].PartOfTetromino.Clear();
@@ -103,9 +103,9 @@ public sealed class GridView : MonoBehaviour
 
     private void Down(int i)
     {
-        for (int y = i; y < _game.Height; y++)
+        for (int y = i; y < _grid.Height; y++)
         {
-            for (int x = 0; x < _game.Width; x++)
+            for (int x = 0; x < _grid.Width; x++)
             {
                 //if (Cells[y, x].IsFill)
                 //{

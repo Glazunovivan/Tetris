@@ -32,35 +32,6 @@ public class TetraminoCellView : MonoBehaviour
         transform.position = _gridView.GetCell(_cell.GridX, _cell.GridY).transform.position;
     }
 
-    //90
-    public void Rotate()
-    {
-        //positionInGrid += new Vector2Int(_cell.PositionRelativeCenter.x * (-1), _cell.PositionRelativeCenter.y * (-1));
-
-        //if (_cell.PositionRelativeCenter.x < 0 || _cell.PositionRelativeCenter.x > 0)
-        //{
-        //    _cell.PositionRelativeCenter.x *= -1;
-        //}
-        //(_cell.PositionRelativeCenter.x, _cell.PositionRelativeCenter.y) = (_cell.PositionRelativeCenter.y, _cell.PositionRelativeCenter.x);
-
-        //positionInGrid += new Vector2Int(_cell.PositionRelativeCenter.x, _cell.PositionRelativeCenter.y);
-    }
-
-    //-90
-    public void RotateInverse()
-    {
-        //positionInGrid += new Vector2Int(_cell.PositionRelativeCenter.x * (-1), _cell.PositionRelativeCenter.y * (-1));
-
-        //if (_cell.PositionRelativeCenter.y < 0 || _cell.PositionRelativeCenter.y > 0)
-        //{
-        //    _cell.PositionRelativeCenter.y *= -1;
-        //}
-
-        //(_cell.PositionRelativeCenter.x, _cell.PositionRelativeCenter.y) = (_cell.PositionRelativeCenter.y, _cell.PositionRelativeCenter.x);
-
-        //positionInGrid += new Vector2Int(_cell.PositionRelativeCenter.x, _cell.PositionRelativeCenter.y);
-    }
-
     public void MoveDownAfterClear()
     {
         //if (parentTetramino != null)

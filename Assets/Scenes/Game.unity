@@ -1335,6 +1335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabTetramino: {fileID: 1224886350115454985, guid: 48dc0883c13ad5b4ba42d3b46c90b5e8,
     type: 3}
+  gridView: {fileID: 1358574024}
 --- !u!1 &1854845398
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,34 +8,25 @@ public sealed class Game
     public bool IsEnded { get; private set; } = false;
     
     public Settings Settings;
-    public Grid Grid { get; set; }
 
     public event Action OnGameStarted;
     public event Action OnSpawnedTetramino;
     public event Action OnGameOver;
     public event Action<string> OnScoreChanged;
 
-    public readonly int Width = 10;
-    public readonly int Height = 20;
-
     public Game()
     {
-        Grid = new Grid(Width, Height, this);
-
         Settings = new Settings();
         Settings.LoadSettings();
-
-        StartGame();
     }
 
     public void StartGame()
     {
+        Debug.Log("Старт игры");
         IsEnded = false;
         Score = new Score();
         SetZeroScore();
         OnGameStarted?.Invoke();
-
-        NewTetramino();
     }
 
     public void UpdateScore()
@@ -55,6 +46,7 @@ public sealed class Game
     public void NewTetramino()
     {
         OnSpawnedTetramino?.Invoke();
+        Debug.Log("Спавним новое тетромино");
     }
 
     private void SetZeroScore()

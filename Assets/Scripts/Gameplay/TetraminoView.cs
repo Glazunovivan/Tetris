@@ -72,30 +72,6 @@ public sealed class TetraminoView : MonoBehaviour
             parts.Add(instantiate);
         }
     }
-
-    private bool IsValidPosition()
-        {
-            for (int i = 0; i < Parts.Count; i++)
-            {
-                if (Parts[i] != null)
-                {
-                    if (Parts[i].PositionInGrid.x < 0 ||
-                        Parts[i].PositionInGrid.x >= game.Width ||
-                        Parts[i].PositionInGrid.y < 0 ||
-                        Parts[i].PositionInGrid.y >= game.Height)
-                    {
-                        return false;
-                    }
-
-                    //проверка, занята ли клеточка с такими координатами
-                    //if (grid.Cells[Parts[i].PositionInGrid.y, Parts[i].PositionInGrid.x].IsFill)
-                    //{
-                    //    return false;
-                    //}
-                }
-            }
-            return true;
-        }
     
     private void DrawInGrid()
     {
@@ -113,7 +89,7 @@ public sealed class TetraminoView : MonoBehaviour
     private void Place()
     {
         tetramino.IsPlaced = true;
-        gridView.PlaceInGrid(this);
+        //gridView.PlaceInGrid(this);
         gridView.CheckLines();
     }
 

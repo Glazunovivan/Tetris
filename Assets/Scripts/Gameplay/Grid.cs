@@ -5,19 +5,20 @@ using UnityEngine;
 
 public class Grid
 {
-    public int Width;
-    public int Height;
+    public int Width { get; private set; }
+    public int Height { get; private set; }
+    public GridCell[,] Cells { get; private set; }
 
-    public GridCell[,] Cells;
-    private Game game;
+    private Game _game;
 
     public Grid(int width, int height, Game game)
     {
         Width = width;
         Height = height;
+        
+        _game = game;
 
         Cells = new GridCell[Height, Width];
-
         for (int y = 0; y < Height; y++)
         {
             for (int x = 0; x < Width; x++)
@@ -32,12 +33,14 @@ public class Grid
         for (int i = 0; i < tetramino.Parts.Length; i++)
         {
             Cells[tetramino.Parts[i].GridY, tetramino.Parts[i].GridX].IsFill = true;
+            //сохраняем ссылку на часть тетромино, чтобы потом очистить клетку
+            Cells[tetramino.Parts[i].GridY, tetramino.Parts[i].GridX].PartOfTetromino = tetramino.Parts[i];
         }
 
-        //if (!game.IsEnded)
-        //{
-        //    //новое тетрамино
-        //}
+        if (!_game.IsEnded)
+        {
+            _game.NewTetramino();
+        }
     }
 
     public void CheckLines()
@@ -49,7 +52,7 @@ public class Grid
                 ClearLine(y);
                 Down(y);
 
-                //_game.UpdateScore();
+                _game.UpdateScore();
             }
         }
     }
@@ -94,8 +97,5 @@ public class Grid
         }
     }
 
-    public GridCell GetCell(int x, int y)
-    {
-        return Cells[y, x];
-    }
+    public GridCell GetCell(int x, int y) => Cells[y, x];
 }

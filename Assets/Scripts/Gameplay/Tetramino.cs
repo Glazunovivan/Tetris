@@ -12,7 +12,6 @@ public abstract class Tetramino
 
     public event Action OnDraw;
     public event Action OnDelete;
-    public event Action OnPlaced;
     private Grid _grid;
 
     public Tetramino()
@@ -24,6 +23,7 @@ public abstract class Tetramino
     {
         _grid = grid;
     }
+
 
     public bool IsValidPosition()
     {
@@ -40,10 +40,10 @@ public abstract class Tetramino
                 }
 
                 //проверка, занята ли клеточка с такими координатами
-                //if (_grid.Cells[Parts[i].GridY, Parts[i].GridX].IsFill)
-                //{
-                //    return false;
-                //}
+                if (_grid.Cells[Parts[i].GridY, Parts[i].GridX].IsFill)
+                {
+                    return false;
+                }
             }
         }
         return true;
@@ -98,6 +98,9 @@ public abstract class Tetramino
         OnDraw?.Invoke();
     }
 
+    /// <summary>
+    /// Вращает все части тетромино
+    /// </summary>
     public void Rotate()
     {
         for (int i = 0; i < Parts.Length; i++)
@@ -107,7 +110,6 @@ public abstract class Tetramino
 
         if (!IsValidPosition())
         {
-            Debug.Log("невалидная позиция");
             //центр на левой половинке находится
             //меняем положения, пока позиция не станет валидной
             if (Parts[0].GridX < _grid.Width / 2)
@@ -149,21 +151,15 @@ public abstract class Tetramino
                 } while (IsValidPosition() != true);
             }
         }
-
-        Debug.Log("Повернулись");
         OnDraw?.Invoke();
     }
 
     public void Place()
     {
         IsPlaced = true;
-        OnPlaced?.Invoke();
 
         _grid.PlaceTetramino(this);
         _grid.CheckLines();
-        //tetramino.IsPlaced = true;
-        //gridView.PlaceInGrid(this);
-        //gridView.CheckLines();
     }
 
     public void Delete()
