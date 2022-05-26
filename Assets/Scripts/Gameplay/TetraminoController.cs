@@ -14,10 +14,12 @@ public class TetraminoController : MonoBehaviour
     private void Start()
     {
         isBoost = false;
-        //tetramino = GetComponent<TetraminoView>();
         //speed = tetramino.Game.Settings.Dificult;
 
-        StartCoroutine(MoveDown());
+        if (tetramino != null)
+        {
+            StartCoroutine(MoveDown());
+        }
     }
 
     private void Update()
@@ -50,11 +52,11 @@ public class TetraminoController : MonoBehaviour
             StartCoroutine(MoveDown());
         }
 
-        //if (tetramino.IsPlaced)
-        //{
-        //    StopAllCoroutines();
-        //    enabled = false;
-        //}
+        if (tetramino.IsPlaced)
+        {
+            StopAllCoroutines();
+            enabled = false;
+        }
     }
 
     public void SetTetramino(Tetramino tetramino)

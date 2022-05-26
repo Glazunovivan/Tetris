@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 
-public class TetraminoCellView : CellView
+public class TetraminoCellView : MonoBehaviour
 {
-    //[SerializeField] private Vector2Int PositionRelativeCenter;
-
-    //private TetraminoView parentTetramino;
     private GridView _gridView;
     private TetraminoCell _cell;
+
+    public Vector2Int PositionInGrid
+    {
+        get
+        {
+            return new Vector2Int(_cell.GridX, _cell.GridY);
+        }
+    }
 
     /// <summary>
     /// Создает частичку тетромино
@@ -17,13 +22,9 @@ public class TetraminoCellView : CellView
     {
         _cell = cell;
         _gridView = gridView;
-        //positionInGrid.x = center.X + _cell.PositionRelativeCenter.x;
-        //positionInGrid.y = center.Y + _cell.PositionRelativeCenter.y;
 
         _cell.GridX = center.X + _cell.PositionRelativeCenter.x;
         _cell.GridY = center.Y + _cell.PositionRelativeCenter.y;
-
-        //_cell.PositionInGrid = new Vector2Int(center.X + _cell.PositionRelativeCenter.x, center.Y + _cell.PositionRelativeCenter.y);
     }
 
     public void DrawInGrid()
@@ -31,30 +32,10 @@ public class TetraminoCellView : CellView
         transform.position = _gridView.GetCell(_cell.GridX, _cell.GridY).transform.position;
     }
 
-    public void MoveLeft()
-    {
-        positionInGrid += new Vector2Int(-1, 0);
-    }
-
-    public void MoveRight()
-    {
-        positionInGrid += new Vector2Int(1, 0);
-    }
-
-    public void MoveDown()
-    {
-        positionInGrid += new Vector2Int(0, -1);
-    }
-
-    public void MoveUp()
-    {
-        positionInGrid += new Vector2Int(0, 1);
-    }
-
     //90
     public void Rotate()
     {
-        positionInGrid += new Vector2Int(_cell.PositionRelativeCenter.x * (-1), _cell.PositionRelativeCenter.y * (-1));
+        //positionInGrid += new Vector2Int(_cell.PositionRelativeCenter.x * (-1), _cell.PositionRelativeCenter.y * (-1));
 
         //if (_cell.PositionRelativeCenter.x < 0 || _cell.PositionRelativeCenter.x > 0)
         //{
@@ -62,13 +43,13 @@ public class TetraminoCellView : CellView
         //}
         //(_cell.PositionRelativeCenter.x, _cell.PositionRelativeCenter.y) = (_cell.PositionRelativeCenter.y, _cell.PositionRelativeCenter.x);
 
-        positionInGrid += new Vector2Int(_cell.PositionRelativeCenter.x, _cell.PositionRelativeCenter.y);
+        //positionInGrid += new Vector2Int(_cell.PositionRelativeCenter.x, _cell.PositionRelativeCenter.y);
     }
 
     //-90
     public void RotateInverse()
     {
-        positionInGrid += new Vector2Int(_cell.PositionRelativeCenter.x * (-1), _cell.PositionRelativeCenter.y * (-1));
+        //positionInGrid += new Vector2Int(_cell.PositionRelativeCenter.x * (-1), _cell.PositionRelativeCenter.y * (-1));
 
         //if (_cell.PositionRelativeCenter.y < 0 || _cell.PositionRelativeCenter.y > 0)
         //{
@@ -77,7 +58,7 @@ public class TetraminoCellView : CellView
 
         //(_cell.PositionRelativeCenter.x, _cell.PositionRelativeCenter.y) = (_cell.PositionRelativeCenter.y, _cell.PositionRelativeCenter.x);
 
-        positionInGrid += new Vector2Int(_cell.PositionRelativeCenter.x, _cell.PositionRelativeCenter.y);
+        //positionInGrid += new Vector2Int(_cell.PositionRelativeCenter.x, _cell.PositionRelativeCenter.y);
     }
 
     public void MoveDownAfterClear()
@@ -87,7 +68,6 @@ public class TetraminoCellView : CellView
         //    parentTetramino.MoveDownAfterClear(this);
         //}
     }
-
 
     public void Clear()
     {

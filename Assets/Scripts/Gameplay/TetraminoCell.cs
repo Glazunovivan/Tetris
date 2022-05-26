@@ -7,16 +7,22 @@ using UnityEngine;
 /// </summary>
 public class TetraminoCell
 {
-    public Vector2Int PositionRelativeCenter { get; set; }
+    public Vector2Int PositionRelativeCenter
+    {
+        get
+        {
+            return positionRelativeCenter;
+        }
+    }
+
+    private Vector2Int positionRelativeCenter;
 
     public int GridX;
     public int GridY;
 
-    public Vector2Int PositionInGrid { get; set; }
-
     public TetraminoCell(int x, int y)
     {
-        PositionRelativeCenter = new Vector2Int(x, y);
+        positionRelativeCenter = new Vector2Int(x, y);
     }
 
     public void MoveLeft()
@@ -37,5 +43,40 @@ public class TetraminoCell
     public void MoveUp()
     {
         GridY +=1;
+    }
+
+    /// <summary>
+    /// Поворачиваем клетку в 90
+    /// </summary>
+    public void Rotate()
+    {
+        GridX += positionRelativeCenter.x * (-1);
+        GridY += positionRelativeCenter.y * (-1);
+
+        if (positionRelativeCenter.x < 0 || positionRelativeCenter.x > 0)
+        {
+            positionRelativeCenter.x *= -1;
+        }
+
+        (positionRelativeCenter.x, positionRelativeCenter.y) = (positionRelativeCenter.y, positionRelativeCenter.x);
+
+        GridX += positionRelativeCenter.x;
+        GridY += positionRelativeCenter.y;
+    }
+
+    /// <summary>
+    /// Поворачиваем клеточку в -90
+    /// </summary>
+    public void RotateInverse()
+    {
+        GridX += positionRelativeCenter.x * (-1);
+        GridY += positionRelativeCenter.y * (-1);
+
+        if (positionRelativeCenter.y < 0 || positionRelativeCenter.y > 0)
+        {
+            positionRelativeCenter.y *= -1;
+        }
+        GridX += positionRelativeCenter.x;
+        GridY += positionRelativeCenter.y;
     }
 }

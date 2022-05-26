@@ -4,6 +4,8 @@ public class GridCell
     public int Y { get; private set; }
     public bool IsFill { get; set; } = false;
 
+    public TetraminoCell PartOfTetromino = null;
+
     public GridCell(int x, int y)
     {
         X = x;

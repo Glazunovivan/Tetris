@@ -49,7 +49,7 @@ public sealed class GridView : MonoBehaviour
 
     public void CheckLines()
     {
-        for (int y = _game.Height-1; y >= 0; y--)
+        for (int y = _grid.Height-1; y >= 0; y--)
         {
             if (IsRowFull(y))
             {
@@ -63,11 +63,11 @@ public sealed class GridView : MonoBehaviour
 
     private void ResetCells()
     {
-        for (int y = 0; y < _game.Height; y++)
+        for (int y = 0; y < _grid.Height; y++)
         {
-            for (int x = 0; x < _game.Width; x++)
+            for (int x = 0; x < _grid.Width; x++)
             {
-                //cells[y, x].IsFill = false;
+                cells[y, x].IsFill = false;
             }
         }
     }

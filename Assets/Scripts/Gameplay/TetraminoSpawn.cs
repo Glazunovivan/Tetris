@@ -50,6 +50,7 @@ public class TetraminoSpawn : MonoBehaviour
                 tetramino = new TetraminoI();
                 break;
         }
+        tetramino.SetGrid(_grid);
 
         TetraminoView tetraminoView = Instantiate(prefabTetramino);
         tetraminoView.Initialize(tetramino, _cellStart, FindObjectOfType<GridView>());
