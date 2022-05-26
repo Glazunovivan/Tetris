@@ -46,7 +46,6 @@ public sealed class Game
     public void NewTetramino()
     {
         OnSpawnedTetramino?.Invoke();
-        Debug.Log("Спавним новое тетромино");
     }
 
     private void SetZeroScore()

@@ -74,7 +74,7 @@ public class Grid
         for (int x = 0; x <Width; x++)
         {
             Cells[y, x].IsFill = false;
-            //Cells[y, x].PartOfTetromino.Clear();
+            Cells[y, x].PartOfTetromino = null;
         }
     }
 
@@ -90,8 +90,6 @@ public class Grid
                     Cells[y - 1, x].PartOfTetromino = Cells[y, x].PartOfTetromino;
                     Cells[y, x].IsFill = false;
                     Cells[y, x].PartOfTetromino = null;
-
-                    //Cells[y - 1, x].PartOfTetromino.MoveDownAfterClear();
                 }
             }
         }

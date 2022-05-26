@@ -85,13 +85,6 @@ public sealed class TetraminoView : MonoBehaviour
             }
         }
     }
-    
-    private void Place()
-    {
-        tetramino.IsPlaced = true;
-        //gridView.PlaceInGrid(this);
-        gridView.CheckLines();
-    }
 
     private void DeleteTetramino()
     {

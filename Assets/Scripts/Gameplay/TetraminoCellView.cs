@@ -42,7 +42,6 @@ public class TetraminoCellView : MonoBehaviour
 
     public void Clear()
     {
-        //parentTetramino.ClearPart(this);
         Destroy(gameObject);
     }
 }
