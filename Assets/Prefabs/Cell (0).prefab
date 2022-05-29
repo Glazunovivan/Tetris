@@ -128,9 +128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30ed9e9da2385a4e8ac1051c74fcaf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionInGrid: {x: 0, y: 0}
-  fillSprite: {fileID: 7910019615033721698, guid: c7f74b4807a15734392778645432e35e,
+  fillSprite: {fileID: -8522345204327330279, guid: c7f74b4807a15734392778645432e35e,
     type: 3}
-  baseSprite: {fileID: -8522345204327330279, guid: c7f74b4807a15734392778645432e35e,
+  baseSprite: {fileID: 7910019615033721698, guid: c7f74b4807a15734392778645432e35e,
     type: 3}
   spriteRenderer: {fileID: 8941656509932073786}
+  partOfTetramino: {fileID: 0}

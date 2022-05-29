@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3244346950784002968}
   - component: {fileID: 3244346950784002971}
   - component: {fileID: 3244346950784002970}
+  - component: {fileID: 3723414787171059770}
   m_Layer: 0
   m_Name: TetraminoCell
   m_TagString: Untagged
@@ -106,3 +107,22 @@ MonoBehaviour:
   - {fileID: 648333266961655199, guid: c7f74b4807a15734392778645432e35e, type: 3}
   - {fileID: 7227719699217431389, guid: c7f74b4807a15734392778645432e35e, type: 3}
   - {fileID: -3443399926542475408, guid: c7f74b4807a15734392778645432e35e, type: 3}
+--- !u!95 &3723414787171059770
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3244346950784003045}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9944baa55a89fbf449af582e534c658c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -22,12 +22,17 @@ public class TetraminoCellView : MonoBehaviour
         }
     }
     
-    
     private GridView _gridView;
     private TetraminoCell _cell;
     private SpriteRenderer sprite;
+    private Animator animator;
 
     private TetraminoView tetramino;
+
+    private void OnEnable()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     /// <summary>
     /// Создает частичку тетромино
@@ -64,9 +69,15 @@ public class TetraminoCellView : MonoBehaviour
         transform.position = _gridView.GetCell(_cell.GridX, _cell.GridY).transform.position;
     }
 
+
     public void Clear()
     {
-        Destroy(gameObject);
+        animator.SetTrigger("Delete");
         tetramino.CheckParts();
+    }
+
+    public void Delete()
+    {
+        Destroy(gameObject);
     }
 }

@@ -17,6 +17,7 @@ public sealed class GridView : MonoBehaviour
         _grid = grid;
         _grid.OnClear += ClearLine;
         _grid.OnDown += Down;
+        //_grid.OnPlaceTetramino += PlaceTetramino;
 
         cells = new GridCellView[grid.Height, grid.Width];
 
@@ -46,6 +47,7 @@ public sealed class GridView : MonoBehaviour
         for (int i = 0; i < tetramino.Parts.Count; i++)
         {
             cells[tetramino.Parts[i].PositionInGrid.y, tetramino.Parts[i].PositionInGrid.x].PartOfTetromino = tetramino.Parts[i];
+            cells[tetramino.Parts[i].PositionInGrid.y, tetramino.Parts[i].PositionInGrid.x].SetColor();
         }
     }
 
@@ -56,6 +58,7 @@ public sealed class GridView : MonoBehaviour
             for (int x = 0; x < _grid.Width; x++)
             {
                 cells[y, x].PartOfTetromino = cells[y+1, x].PartOfTetromino;
+                cells[y, x].SetColor();
             }
         }
     }
@@ -78,6 +81,7 @@ public sealed class GridView : MonoBehaviour
             if (cells[y,x].PartOfTetromino != null)
             {
                 cells[y, x].PartOfTetromino.Clear();
+                cells[y, x].SetColor();
             }
         }
     }

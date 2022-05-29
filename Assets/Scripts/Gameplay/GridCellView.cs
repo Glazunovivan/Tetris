@@ -24,7 +24,7 @@ public class GridCellView : MonoBehaviour
 
     public void OnEnable()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        //spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void Initialize(GridCell cell)
