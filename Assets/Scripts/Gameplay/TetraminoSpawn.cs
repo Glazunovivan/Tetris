@@ -54,7 +54,7 @@ public class TetraminoSpawn : MonoBehaviour
         tetramino.SetGrid(_grid);
 
         TetraminoView tetraminoView = Instantiate(prefabTetramino);
-        tetraminoView.Initialize(tetramino, _cellStart, gridView);
+        tetraminoView.Initialize(tetramino, _cellStart, gridView, _grid);
         tetraminoView.GetComponent<TetraminoController>().SetTetramino(tetramino);
     }
 

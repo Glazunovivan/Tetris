@@ -1,10 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class TetraminoCellView : MonoBehaviour
 {
-    private GridView _gridView;
-    private TetraminoCell _cell;
 
+    [SerializeField] private List<Sprite> _sprites;
+
+
+    public int CountSprites
+    {
+        get
+        {
+            return _sprites.Count;
+        }
+    }
     public Vector2Int PositionInGrid
     {
         get
@@ -12,6 +21,13 @@ public class TetraminoCellView : MonoBehaviour
             return new Vector2Int(_cell.GridX, _cell.GridY);
         }
     }
+    
+    
+    private GridView _gridView;
+    private TetraminoCell _cell;
+    private SpriteRenderer sprite;
+
+    private TetraminoView tetramino;
 
     /// <summary>
     /// Создает частичку тетромино
@@ -22,9 +38,25 @@ public class TetraminoCellView : MonoBehaviour
     {
         _cell = cell;
         _gridView = gridView;
+        _cell.OnDown += DrawInGrid;
 
         _cell.GridX = center.X + _cell.PositionRelativeCenter.x;
         _cell.GridY = center.Y + _cell.PositionRelativeCenter.y;
+
+        sprite = GetComponent<SpriteRenderer>();
+        
+
+        tetramino = GetComponentInParent<TetraminoView>();
+    }
+
+    public void SetSprite(int index)
+    {
+        sprite.sprite = _sprites[index];
+    }
+
+    public void OnDestroy()
+    {
+        _cell.OnDown -= DrawInGrid;
     }
 
     public void DrawInGrid()
@@ -32,16 +64,9 @@ public class TetraminoCellView : MonoBehaviour
         transform.position = _gridView.GetCell(_cell.GridX, _cell.GridY).transform.position;
     }
 
-    public void MoveDownAfterClear()
-    {
-        //if (parentTetramino != null)
-        //{
-        //    parentTetramino.MoveDownAfterClear(this);
-        //}
-    }
-
     public void Clear()
     {
         Destroy(gameObject);
+        tetramino.CheckParts();
     }
 }

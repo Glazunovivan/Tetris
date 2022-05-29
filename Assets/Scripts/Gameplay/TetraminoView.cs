@@ -21,15 +21,18 @@ public sealed class TetraminoView : MonoBehaviour
     private Tetramino tetramino;
     private List<TetraminoCellView> parts;
     private GridView gridView;
+    private Grid grid;
     private Game game;
 
-    public void Initialize(Tetramino tetramino, GridCell center, GridView gridView)
+    public void Initialize(Tetramino tetramino, GridCell center, GridView gridView, Grid grid)
     {
         this.tetramino = tetramino;
         this.tetramino.OnDraw += DrawInGrid;
         this.tetramino.OnDelete += DeleteTetramino;
 
         this.gridView = gridView;
+        this.grid = grid;
+        this.grid.OnPlaceTetramino += PlaceInGrid;
 
         CreateCellsView(center);
 
@@ -40,23 +43,12 @@ public sealed class TetraminoView : MonoBehaviour
 
         DrawInGrid();
     }
-    
-    public void MoveDownAfterClear(TetraminoCellView part)
-        {
-            //part.MoveDown();
-            DrawInGrid();
-        }
-    
-    public void ClearPart(TetraminoCellView part)
-        {
-            parts.Remove(part);
-            Destroy(part.gameObject);
 
-            if (Parts.Count == 0)
-            {
-                DeleteTetramino();
-            }
-        }
+    public void PlaceInGrid()
+    {
+        gridView.PlaceTetramino(this);
+        this.grid.OnPlaceTetramino -= PlaceInGrid;
+    }
 
     /// <summary>
     /// Создаем дочерние элементы отображения
@@ -64,11 +56,14 @@ public sealed class TetraminoView : MonoBehaviour
     /// <param name="center"></param>
     private void CreateCellsView(GridCell center)
     {
+        int index = Random.Range(0, prefabPart.CountSprites);
         parts = new List<TetraminoCellView>();
         for (int i = 0; i < tetramino.Parts.Length; i++)
         {
             var instantiate = Instantiate(prefabPart, transform);
             instantiate.Initialize(tetramino.Parts[i], center, this.gridView);
+            
+            instantiate.SetSprite(index);
             parts.Add(instantiate);
         }
     }
@@ -93,5 +88,13 @@ public sealed class TetraminoView : MonoBehaviour
         game.OnGameOver -= DeleteTetramino;
 
         Destroy(gameObject);
+    }
+
+    public void CheckParts()
+    {
+        if (parts.Count == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

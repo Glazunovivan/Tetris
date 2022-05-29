@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -6960950449415582586, guid: c7f74b4807a15734392778645432e35e,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -97,5 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbf28ea43a7d47e4bb3650d090050790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionInGrid: {x: 0, y: 0}
-  PositionRelativeCenter: {x: 0, y: 0}
+  _sprites:
+  - {fileID: 5857626402275400046, guid: 398e5f2f90dac5644b0b79b61d01f8b3, type: 3}
+  - {fileID: 8900754499175746459, guid: 398e5f2f90dac5644b0b79b61d01f8b3, type: 3}
+  - {fileID: 7290893723632923700, guid: c7f74b4807a15734392778645432e35e, type: 3}
+  - {fileID: -6960950449415582586, guid: c7f74b4807a15734392778645432e35e, type: 3}
+  - {fileID: 8691179472433663500, guid: c7f74b4807a15734392778645432e35e, type: 3}
+  - {fileID: 648333266961655199, guid: c7f74b4807a15734392778645432e35e, type: 3}
+  - {fileID: 7227719699217431389, guid: c7f74b4807a15734392778645432e35e, type: 3}
+  - {fileID: -3443399926542475408, guid: c7f74b4807a15734392778645432e35e, type: 3}

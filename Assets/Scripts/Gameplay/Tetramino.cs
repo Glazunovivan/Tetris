@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public abstract class Tetramino
 {
@@ -21,7 +22,6 @@ public abstract class Tetramino
         _grid = grid;
     }
 
-
     public bool IsValidPosition()
     {
         for (int i = 0; i < Parts.Length; i++)
@@ -37,7 +37,8 @@ public abstract class Tetramino
                 }
 
                 //проверка, занята ли клеточка с такими координатами
-                if (_grid.Cells[Parts[i].GridY, Parts[i].GridX].IsFill)
+                if (_grid.Cells[Parts[i].GridY, Parts[i].GridX].IsFill && 
+                    _grid.Cells[Parts[i].GridY, Parts[i].GridX].PartOfTetromino != null)
                 {
                     return false;
                 }
@@ -172,10 +173,10 @@ public class TetraminoI : Tetramino
     {
         Parts = new TetraminoCell[4]
         {
-            new TetraminoCell(0,0),
-            new TetraminoCell(-1,0),
-            new TetraminoCell(1,0),
-            new TetraminoCell(2,0)
+            new TetraminoCell(0,0,this),
+            new TetraminoCell(-1,0,this),
+            new TetraminoCell(1,0, this),
+            new TetraminoCell(2,0,this)
         };
     }
 }
@@ -186,10 +187,10 @@ public class TetraminoJ : Tetramino
     {
         Parts = new TetraminoCell[4]
         {
-            new TetraminoCell(0,0),
-            new TetraminoCell(-1,1),
-            new TetraminoCell(-1,0),
-            new TetraminoCell(1,0)
+            new TetraminoCell(0,0,this),
+            new TetraminoCell(-1,1,this),
+            new TetraminoCell(-1,0,this),
+            new TetraminoCell(1,0,this)
         };
     }
 }
@@ -200,10 +201,10 @@ public class TetraminoL : Tetramino
     {
         Parts = new TetraminoCell[4]
         {
-            new TetraminoCell(0,0),
-            new TetraminoCell(1,1),
-            new TetraminoCell(-1,0),
-            new TetraminoCell(1,0)
+            new TetraminoCell(0,0,this),
+            new TetraminoCell(1,1,this),
+            new TetraminoCell(-1,0,this),
+            new TetraminoCell(1,0,this)
         };
     }
 }
@@ -214,10 +215,10 @@ public class TetraminoO : Tetramino
     {
         Parts = new TetraminoCell[4]
         {
-            new TetraminoCell(0,0),
-            new TetraminoCell(1,1),
-            new TetraminoCell(0,1),
-            new TetraminoCell(1,0)
+            new TetraminoCell(0,0,this),
+            new TetraminoCell(1,1,this),
+            new TetraminoCell(0,1,this),
+            new TetraminoCell(1,0,this)
         };
     }
 }
@@ -228,10 +229,10 @@ public class TetraminoS : Tetramino
     {
         Parts = new TetraminoCell[4]
         {
-            new TetraminoCell(0,0),
-            new TetraminoCell(1,1),
-            new TetraminoCell(0,1),
-            new TetraminoCell(2,0)
+            new TetraminoCell(0,0,this),
+            new TetraminoCell(0,-1,this),
+            new TetraminoCell(-1,0,this),
+            new TetraminoCell(-1,1,this)
         };
     }
 }
@@ -242,10 +243,10 @@ public class TetraminoT : Tetramino
     {
         Parts = new TetraminoCell[4]
         {
-            new TetraminoCell(0,0),
-            new TetraminoCell(-1,0),
-            new TetraminoCell(1,0),
-            new TetraminoCell(0,1)
+            new TetraminoCell(0,0,this),
+            new TetraminoCell(-1,0,this),
+            new TetraminoCell(1,0,this),
+            new TetraminoCell(0,1,this)
         };
     }
 }
@@ -256,10 +257,10 @@ public class TetraminoZ : Tetramino
     {
         Parts = new TetraminoCell[4]
         {
-            new TetraminoCell(0,0),
-            new TetraminoCell(0,1),
-            new TetraminoCell(1,0),
-            new TetraminoCell(-1,1)
+            new TetraminoCell(0,0,this),
+            new TetraminoCell(0,1,this),
+            new TetraminoCell(1,0,this),
+            new TetraminoCell(-1,1,this)
         };
     }
 }

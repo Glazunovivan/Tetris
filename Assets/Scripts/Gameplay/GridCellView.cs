@@ -8,19 +8,23 @@ public class GridCellView : MonoBehaviour
 
     private GridCell cell;
 
-    public TetraminoCellView PartOfTetromino { get; set; }
-
-    public bool IsFill
+    public TetraminoCellView PartOfTetromino
     {
         get
         {
-            return cell.IsFill;
+            return partOfTetramino;
         }
         set
         {
-            cell.IsFill = value;
-            SetColor();
+            partOfTetramino = value;
         }
+    }
+
+    [SerializeField] private TetraminoCellView partOfTetramino;
+
+    public void OnEnable()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void Initialize(GridCell cell)
@@ -28,15 +32,15 @@ public class GridCellView : MonoBehaviour
         this.cell = cell;
     }
 
-    private void SetColor()
+    public void SetColor()
     {
         if (cell.IsFill)
         {
-            spriteRenderer.sprite = baseSprite;
+            spriteRenderer.sprite = fillSprite;
         }
         else
         {
-            spriteRenderer.sprite = fillSprite;
+            spriteRenderer.sprite = baseSprite;
         }
     }
 }

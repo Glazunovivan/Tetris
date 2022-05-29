@@ -11,4 +11,10 @@ public class GridCell
         Y = y;
         IsFill = false;
     }
+
+    public void Clear()
+    {
+        IsFill = false;
+        PartOfTetromino = null;
+    }
 }

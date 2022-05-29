@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public sealed class GridView : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public sealed class GridView : MonoBehaviour
         _game = game;
         _game.OnGameStarted += ResetCells;
         _grid = grid;
+        _grid.OnClear += ClearLine;
+        _grid.OnDown += Down;
 
         cells = new GridCellView[grid.Height, grid.Width];
 
@@ -29,34 +32,30 @@ public sealed class GridView : MonoBehaviour
         }
     }
 
-    public GridCellView GetCell(int x, int y)
+    private void OnDestroy()
     {
-        return cells[y, x];
+        _game.OnGameStarted -= ResetCells;
+        _grid.OnClear -= ClearLine;
+        _grid.OnDown -= Down;
     }
 
-    //public void PlaceInGrid(TetraminoView tetramino)
-    //{
-    //    for (int i = 0; i < tetramino.Parts.Count; i++)
-    //    {
-    //        AddInGrid(tetramino.Parts[i]);
-    //    }
+    public GridCellView GetCell(int x, int y) => cells[y, x];
 
-    //    if (!_game.IsEnded)
-    //    {
-    //        _game.NewTetramino();
-    //    }
-    //}
-
-    public void CheckLines()
+    public void PlaceTetramino(TetraminoView tetramino)
     {
-        for (int y = _grid.Height-1; y >= 0; y--)
+        for (int i = 0; i < tetramino.Parts.Count; i++)
         {
-            if (IsRowFull(y))
-            {
-                ClearLine(y);
-                Down(y);
+            cells[tetramino.Parts[i].PositionInGrid.y, tetramino.Parts[i].PositionInGrid.x].PartOfTetromino = tetramino.Parts[i];
+        }
+    }
 
-                _game.UpdateScore();
+    private void Down(int i)
+    {
+        for (int y = i; y < _grid.Height-1; y++)
+        {
+            for (int x = 0; x < _grid.Width; x++)
+            {
+                cells[y, x].PartOfTetromino = cells[y+1, x].PartOfTetromino;
             }
         }
     }
@@ -67,55 +66,18 @@ public sealed class GridView : MonoBehaviour
         {
             for (int x = 0; x < _grid.Width; x++)
             {
-                cells[y, x].IsFill = false;
+                cells[y, x].PartOfTetromino = null;
             }
         }
-    }
-
-    private void AddInGrid(TetraminoCellView part)
-    {
-        //cells[part.PositionInGrid.y, part.PositionInGrid.x].IsFill = true;
-
-        //сохраняем ссылку на часть тетромино, чтобы потом очистить клетку
-        //cells[part.PositionInGrid.y, part.PositionInGrid.x].PartOfTetromino = part;
-    }
-
-    private bool IsRowFull(int y)
-    {
-        for (int x = 0; x < _grid.Width; x++)
-        {
-            //if (cells[y, x].IsFill == false)
-            //{
-            //    return false;
-            //}
-        }
-        return true;
     }
 
     private void ClearLine(int y)
     {
         for (int x = 0; x < _grid.Width; x++)
         {
-            //cells[y, x].IsFill = false;
-            //Cells[y, x].PartOfTetromino.Clear();
-        }
-    }
-
-    private void Down(int i)
-    {
-        for (int y = i; y < _grid.Height; y++)
-        {
-            for (int x = 0; x < _grid.Width; x++)
+            if (cells[y,x].PartOfTetromino != null)
             {
-                //if (Cells[y, x].IsFill)
-                //{
-                //    Cells[y - 1, x].IsFill = Cells[y, x].IsFill;
-                //    Cells[y - 1, x].PartOfTetromino = Cells[y, x].PartOfTetromino;
-                //    Cells[y, x].IsFill = false;
-                //    Cells[y, x].PartOfTetromino = null;
-
-                //    Cells[y-1, x].PartOfTetromino.MoveDownAfterClear();
-                //}
+                cells[y, x].PartOfTetromino.Clear();
             }
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,8 +21,13 @@ public class TetraminoCell
     public int GridX;
     public int GridY;
 
-    public TetraminoCell(int x, int y)
+    public event Action OnDown;
+
+    public Tetramino Tetramino;
+
+    public TetraminoCell(int x, int y, Tetramino tetramino)
     {
+        Tetramino = tetramino;
         positionRelativeCenter = new Vector2Int(x, y);
     }
 
@@ -37,7 +43,7 @@ public class TetraminoCell
 
     public void MoveDown()
     {
-        GridY += -1;
+        GridY -= 1;
     }
 
     public void MoveUp()
@@ -78,5 +84,11 @@ public class TetraminoCell
         }
         GridX += positionRelativeCenter.x;
         GridY += positionRelativeCenter.y;
+    }
+
+    public void MoveDownAfterClear()
+    {
+        MoveDown();
+        OnDown?.Invoke();
     }
 }
