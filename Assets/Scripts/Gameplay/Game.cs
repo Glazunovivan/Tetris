@@ -47,9 +47,9 @@ public sealed class Game
     {
         IsEnded = true;
 
-        SaveData sd = SaveSystem.Load();
-        sd.AddScore(Score.Count);
-        SaveSystem.Save(sd);
+        //SaveData sd = SaveSystem.Load();
+        //sd.AddScore(Score.Count);
+        //SaveSystem.Save(sd);
 
         OnGameOver?.Invoke();
     } 
