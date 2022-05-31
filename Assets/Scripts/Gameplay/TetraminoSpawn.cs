@@ -20,6 +20,7 @@ public class TetraminoSpawn : MonoBehaviour
 
     public void Spawn()
     {
+        Debug.Log("Заспавнили тетромино");
         int randTetramino = Random.Range(0, 7);
         
         Tetramino tetramino;
@@ -56,6 +57,8 @@ public class TetraminoSpawn : MonoBehaviour
         TetraminoView tetraminoView = Instantiate(prefabTetramino);
         tetraminoView.Initialize(tetramino, _cellStart, gridView, _grid);
         tetraminoView.GetComponent<TetraminoController>().SetTetramino(tetramino);
+        tetraminoView.GetComponent<TetraminoController>().SetSpeed(_game.Settings.Dificult.Value);
+        tetraminoView.GetComponent<TetraminoController>().StartMove();
     }
 
     private void OnDestroy()

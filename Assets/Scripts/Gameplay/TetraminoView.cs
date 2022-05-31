@@ -14,7 +14,6 @@ public sealed class TetraminoView : MonoBehaviour
                 return parts;
             }
         } 
-    public Game Game => game;
     
     [SerializeField] private TetraminoCellView prefabPart;
 
@@ -22,7 +21,6 @@ public sealed class TetraminoView : MonoBehaviour
     private List<TetraminoCellView> parts;
     private GridView gridView;
     private Grid grid;
-    private Game game;
 
     public void Initialize(Tetramino tetramino, GridCell center, GridView gridView, Grid grid)
     {
@@ -38,7 +36,9 @@ public sealed class TetraminoView : MonoBehaviour
 
         if (!tetramino.IsValidPosition())
         {
-            game.GameOver();
+            //game.GameOver();
+            FindObjectOfType<GameCreator>().Game.GameOver();
+            return;
         }
 
         DrawInGrid();
@@ -85,7 +85,7 @@ public sealed class TetraminoView : MonoBehaviour
     {
         tetramino.OnDraw -= DrawInGrid;
         tetramino.OnDelete -= DeleteTetramino;
-        game.OnGameOver -= DeleteTetramino;
+        //game.OnGameOver -= DeleteTetramino;
 
         Destroy(gameObject);
     }

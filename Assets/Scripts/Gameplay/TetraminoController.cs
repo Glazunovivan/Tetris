@@ -11,17 +11,6 @@ public class TetraminoController : MonoBehaviour
     private bool isBoost;
     private float speed = 1.5f;
 
-    private void Start()
-    {
-        isBoost = false;
-        //speed = tetramino.Game.Settings.Dificult;
-
-        if (tetramino != null)
-        {
-            StartCoroutine(MoveDown());
-        }
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -62,6 +51,21 @@ public class TetraminoController : MonoBehaviour
     public void SetTetramino(Tetramino tetramino)
     {
         this.tetramino = tetramino;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        this.speed = speed;
+    }
+
+    public void StartMove()
+    {
+        isBoost = false;
+
+        if (tetramino != null)
+        {
+            StartCoroutine(MoveDown());
+        }
     }
 
     private IEnumerator MoveDown()

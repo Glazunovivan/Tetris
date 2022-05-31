@@ -10,6 +10,7 @@ public sealed class Game
     public Settings Settings;
 
     public event Action OnGameStarted;
+    public event Action OnGameRestart;
     public event Action OnSpawnedTetramino;
     public event Action OnGameOver;
     public event Action<string> OnScoreChanged;
@@ -27,6 +28,13 @@ public sealed class Game
         Score = new Score();
         SetZeroScore();
         OnGameStarted?.Invoke();
+        OnSpawnedTetramino?.Invoke();
+    }
+
+    public void RestartGame()
+    {
+        OnGameRestart?.Invoke();
+        OnGameStarted?.Invoke();
     }
 
     public void UpdateScore()
@@ -38,8 +46,11 @@ public sealed class Game
     public void GameOver()
     {
         IsEnded = true;
-        SaveSystem.Save(new SaveData(Score.Count));
-        
+
+        SaveData sd = SaveSystem.Load();
+        sd.AddScore(Score.Count);
+        SaveSystem.Save(sd);
+
         OnGameOver?.Invoke();
     } 
 

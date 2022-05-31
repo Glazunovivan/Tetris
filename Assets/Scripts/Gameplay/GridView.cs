@@ -14,10 +14,10 @@ public sealed class GridView : MonoBehaviour
     {
         _game = game;
         _game.OnGameStarted += ResetCells;
+        _game.OnGameRestart += ResetCells;
         _grid = grid;
         _grid.OnClear += ClearLine;
         _grid.OnDown += Down;
-        //_grid.OnPlaceTetramino += PlaceTetramino;
 
         cells = new GridCellView[grid.Height, grid.Width];
 
@@ -36,6 +36,7 @@ public sealed class GridView : MonoBehaviour
     private void OnDestroy()
     {
         _game.OnGameStarted -= ResetCells;
+        _game.OnGameRestart -= ResetCells;
         _grid.OnClear -= ClearLine;
         _grid.OnDown -= Down;
     }
@@ -69,8 +70,17 @@ public sealed class GridView : MonoBehaviour
         {
             for (int x = 0; x < _grid.Width; x++)
             {
-                cells[y, x].PartOfTetromino = null;
+                if (cells[y, x].PartOfTetromino != null)
+                {
+                    Destroy(cells[y, x].PartOfTetromino.gameObject);
+                }
             }
+        }
+        TetraminoView[] tetraminoViews = FindObjectsOfType<TetraminoView>();
+
+        for (int i = 0; i<tetraminoViews.Length; i++)
+        {
+            Destroy(tetraminoViews[i].gameObject);
         }
     }
 

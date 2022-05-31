@@ -1,25 +1,35 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Settings
 {
-    private const string DIFICULT_KEY = "DificultSettings";
+    public Dificult Dificult { get; set; }
 
-    public float Dificult { get; set; }
-
-    public void LoadSettings()
+    public Dificult LoadSettings()
     {
-        if (PlayerPrefs.HasKey(DIFICULT_KEY))
+        Dificult = new Dificult();
+
+        if (PlayerPrefs.HasKey(Dificult.KEY_DIFICULT))
         {
-            Dificult = PlayerPrefs.GetFloat(DIFICULT_KEY);
+            Dificult.Value = PlayerPrefs.GetFloat(Dificult.KEY_DIFICULT);
         }
         else
         {
-            Dificult = 1.3f;    //медленная скорость    
+            Dificult.Value = 1.3f;    //медленная скорость    
         }
+
+        return Dificult;
     }
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetFloat(DIFICULT_KEY, (int)Dificult);
+        PlayerPrefs.SetFloat(Dificult.KEY_DIFICULT, Dificult.Value);
     }
+}
+
+public class Dificult
+{
+    public const string KEY_DIFICULT = "DIFICULT";
+
+    public float Value { get; set; }
 }
